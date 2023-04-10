@@ -1,6 +1,0 @@
-[submodule "Ong.API/Ong.Client"]
-	path = Ong.API/Ong.Client
-	url = git@github.com:AlexandreBetassa/Ong.Client.git
-[submodule "Ong.Client"]
-	path = Ong.Client
-	url = git@github.com:AlexandreBetassa/Ong.Client.git
