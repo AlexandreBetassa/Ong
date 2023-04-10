@@ -1,15 +1,26 @@
+using MediatR;
+using Ong.Domain.Interfaces;
+using Ong.Domain.Queries;
+using Ong.Infra.Data.BaseData;
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddSingleton<ILoggerFactory, LoggerFactory>();
+builder.Services.AddScoped<IParceirosRepository, ParceirosRepository>();
+
+builder.Services.AddMediatR(opt =>
+{
+    opt.RegisterServicesFromAssembly(typeof(GetParceirosQueryCommandHandler).Assembly);
+});
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
