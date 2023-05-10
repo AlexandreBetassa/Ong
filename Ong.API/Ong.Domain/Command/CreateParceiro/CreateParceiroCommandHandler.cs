@@ -16,9 +16,20 @@ namespace Ong.Domain.Command.CreateParceiro
             _parceirosRepository = parceirosRepository;
         }
 
-        public Task<ParceirosOng> Handle(CreateParceiroCommand request, CancellationToken cancellationToken)
+        public async Task<ParceirosOng> Handle(CreateParceiroCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+            finally
+            {
+
+            }
         }
     }
 }
