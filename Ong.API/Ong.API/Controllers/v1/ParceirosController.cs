@@ -14,12 +14,26 @@ namespace Ong.API.Controllers.v1
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetParceiro([FromQuery]GetParceirosQueryCommand request)
+        [HttpPost]
+        public async Task<IActionResult> CreateParceiro()
         {
             try
             {
-                return Ok( await _mediator.Send(request, CancellationToken.None));
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetParceiro([FromQuery] GetParceirosQueryCommand request)
+        {
+            try
+            {
+                return Ok(await _mediator.Send(request, CancellationToken.None));
             }
             catch (Exception e)
             {

@@ -1,8 +1,8 @@
-using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Ong.Domain.Interfaces;
 using Ong.Domain.Queries;
 using Ong.Infra.Data.BaseData;
-using System.Reflection;
+using Ong.Infra.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,7 @@ builder.Services.AddMediatR(opt =>
 {
     opt.RegisterServicesFromAssembly(typeof(GetParceirosQueryCommandHandler).Assembly);
 });
-
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["Database"]));
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();

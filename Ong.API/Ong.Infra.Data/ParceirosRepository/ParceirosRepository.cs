@@ -11,8 +11,9 @@ namespace Ong.Infra.Data.BaseData
     {
         public readonly AppDbContext _context;
 
-        public ParceirosRepository()
+        public ParceirosRepository(AppDbContext context)
         {
+            _context = context;
         }
 
         public Task<ParceirosOng> CreateAsync(ParceirosOng entity)
