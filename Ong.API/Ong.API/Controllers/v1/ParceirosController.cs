@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Ong.Domain.Command.CreateParceiro;
 using Ong.Domain.Queries;
 
 namespace Ong.API.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [Route("api/parceiros")]
     [ApiController]
     public class ParceirosController : ControllerBase
     {
@@ -15,12 +16,13 @@ namespace Ong.API.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateParceiro()
+        public async Task<IActionResult> CreateParceiro(CreateParceiroCommand request)
         {
             try
             {
+                var result = await _mediator.Send(request, CancellationToken.None);
 
-                return Ok();
+                return Ok(result);
             }
             catch (Exception ex)
             {

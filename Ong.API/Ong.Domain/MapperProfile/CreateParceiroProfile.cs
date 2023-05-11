@@ -9,7 +9,8 @@ namespace Ong.Domain.MapperProfile
         public CreateParceiroProfile()
         {
             CreateMap<CreateParceiroCommand, ParceirosOng>()
-                .ForMember(dest => dest.UrlLogotipo, src => src.MapFrom(opt => opt.UrlLogotipo));
+                .ForMember(dest => dest.UrlLogotipo, src => src.MapFrom(opt => opt.UrlLogotipo))
+                .ForMember(dest => dest.Nome, src => src.MapFrom(opt => opt.Nome));
         }
     }
 }

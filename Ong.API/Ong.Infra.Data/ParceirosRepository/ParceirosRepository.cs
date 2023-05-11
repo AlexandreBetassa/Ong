@@ -1,8 +1,10 @@
-﻿using Ong.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Ong.Domain.Entities;
 using Ong.Domain.Interfaces;
 using Ong.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ong.Infra.Data.BaseData
@@ -16,9 +18,12 @@ namespace Ong.Infra.Data.BaseData
             _context = context;
         }
 
-        public Task<ParceirosOng> CreateAsync(ParceirosOng entity)
+        public async Task<ParceirosOng> CreateAsync(ParceirosOng entity)
         {
-            throw new NotImplementedException();
+            var result = await _context.Set<ParceirosOng>().AddAsync(entity);
+            _context.SaveChanges();
+
+            return result.Entity;
         }
 
         public Task<ParceirosOng> DeleteAsync(ParceirosOng entity)
@@ -28,13 +33,7 @@ namespace Ong.Infra.Data.BaseData
 
         public async Task<IEnumerable<ParceirosOng>> GetAllAsync()
         {
-            var parceiros = new List<ParceirosOng>();
-
-            parceiros.Add(new ParceirosOng { Nome = "parceiro1", UrlLogotipo = "logotipo 1" });
-            parceiros.Add(new ParceirosOng { Nome = "parceiro2", UrlLogotipo = "logotipo 2" });
-
-            return parceiros;
-            //return await _context.Set<ParceirosOng>().ToListAsync();
+            return await _context.Set<ParceirosOng>().ToListAsync();
         }
 
         public Task<ParceirosOng> GetByIdAsync(int id)
