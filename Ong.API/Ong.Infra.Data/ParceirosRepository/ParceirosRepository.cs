@@ -2,9 +2,7 @@
 using Ong.Domain.Entities;
 using Ong.Domain.Interfaces;
 using Ong.Infra.Data.Context;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ong.Infra.Data.BaseData
@@ -26,9 +24,12 @@ namespace Ong.Infra.Data.BaseData
             return result.Entity;
         }
 
-        public Task<ParceirosOng> DeleteAsync(ParceirosOng entity)
+        public async Task<ParceirosOng> DeleteAsync(ParceirosOng entity)
         {
-            throw new NotImplementedException();
+            var result = _context.Set<ParceirosOng>().Remove(entity);
+            await _context.SaveChangesAsync();
+
+            return result.Entity;
         }
 
         public async Task<IEnumerable<ParceirosOng>> GetAllAsync()
@@ -36,14 +37,28 @@ namespace Ong.Infra.Data.BaseData
             return await _context.Set<ParceirosOng>().ToListAsync();
         }
 
-        public Task<ParceirosOng> GetByIdAsync(int id)
+        public async Task<ParceirosOng> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context
+                            .Set<ParceirosOng>()
+                            .AsNoTracking()
+                            .FirstOrDefaultAsync(parceiro => parceiro.Id == id);
         }
 
-        public Task<ParceirosOng> UpdateAsync(ParceirosOng entity)
+        public async Task<ParceirosOng> GetParceiroByName(string name)
         {
-            throw new NotImplementedException();
+            return await _context
+                            .Set<ParceirosOng>()
+                            .AsNoTracking()
+                            .FirstOrDefaultAsync(parceiro => parceiro.Nome == name);
+        }
+
+        public async Task<ParceirosOng> UpdateAsync(ParceirosOng entity)
+        {
+            var result = _context.Set<ParceirosOng>().Update(entity);
+            await _context.SaveChangesAsync();
+
+            return result.Entity;
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Ong.Domain.Interfaces
     public interface IBaseEntity
     {
         [Key]
-        public int Id { get; set; } 
+        public int Id { get; set; }
     }
 }

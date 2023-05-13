@@ -19,18 +19,17 @@ namespace Ong.Domain.Queries
         {
             try
             {
-                _logger.LogInformation($"Método {nameof(GetParceirosQueryCommandHandler)}.Handle iniciado");
+                _logger.LogInformation($"Iniciado serviço {nameof(GetParceirosQueryCommandHandler)}");
                 var response = await _parceirosRepository.GetAllAsync();
+                _logger.LogInformation($"Sucesso serviço {nameof(GetParceirosQueryCommandHandler)}");
 
                 return new GetParceirosResponse(response);
             }
             catch (Exception)
             {
+                _logger.LogError($"Erro serviço {nameof(GetParceirosQueryCommandHandler)}");
+
                 throw;
-            }
-            finally
-            {
-                _logger.LogInformation($"Método {nameof(GetParceirosQueryCommandHandler)}.Handle finalizado");
             }
         }
     }

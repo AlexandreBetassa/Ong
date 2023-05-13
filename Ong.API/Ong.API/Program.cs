@@ -11,16 +11,13 @@ builder.Services.AddSingleton<ILoggerFactory, LoggerFactory>();
 builder.Services.AddScoped<IParceirosRepository, ParceirosRepository>();
 
 builder.Services.AddMediatR(opt =>
-{
-    opt.RegisterServicesFromAssembly(typeof(GetParceirosQueryCommandHandler).Assembly);
-});
+                                opt.RegisterServicesFromAssembly(typeof(GetParceirosQueryCommandHandler).Assembly));
 
 builder.Services.AddAutoMapper(opt =>
-{
-    opt.AddMaps(typeof(CreateParceiroProfile).Assembly);
-});
+                                opt.AddMaps(typeof(CreateParceiroProfile).Assembly));
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["Database"]));
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
