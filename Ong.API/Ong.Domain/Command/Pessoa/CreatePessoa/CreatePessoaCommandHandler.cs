@@ -25,7 +25,7 @@ namespace Ong.Domain.Command.Pessoa.CreatePessoa
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(CreatePessoaCommandHandler)} || Cadastro Pessoa {request.Nome}");
 
-                var pessoa = _mapper.Map<Entities.Pessoa>(request);
+                var pessoa = _mapper.Map<Entities.Usuario>(request);
                 await _pessoaRepository.CreateAsync(pessoa);
 
                 _logger.LogInformation($"Sucesso serviço {nameof(CreatePessoaCommandHandler)} || Cadastro Pessoa {request.Nome}");

@@ -6,7 +6,7 @@ namespace Ong.Domain.Command.Pessoa.CreatePessoa
     {
         public CreatePessoaProfile()
         {
-            CreateMap<CreatePessoaCommand, Entities.Pessoa>();
+            CreateMap<CreatePessoaCommand, Entities.Usuario>();
         }
     }
 }

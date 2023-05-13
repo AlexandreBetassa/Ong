@@ -3,7 +3,7 @@ using Ong.Domain.Interfaces.Base;
 
 namespace Ong.Domain.Interfaces
 {
-    public interface IPessoaReppository : IBaseRepository<Pessoa>
+    public interface IUsuarioReppository : IBaseRepository<Usuario>
     {
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ong.Domain.Entities
 {
-    public class Pessoa : BaseEntity
+    public class Usuario : BaseEntity
     {
         public string Nome { get; set; }
         public string Cpf { get; set; }
