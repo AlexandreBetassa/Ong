@@ -31,7 +31,7 @@ namespace Ong.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "pessoas",
+                name: "usuario",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -45,10 +45,10 @@ namespace Ong.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_pessoas", x => x.Id);
+                    table.PrimaryKey("PK_usuarios", x => x.Id);
                     table.UniqueConstraint("CpfUnique", x => x.Cpf);
                     table.ForeignKey(
-                        name: "FK_pessoas_Endereco_EnderecoId",
+                        name: "FK_usuario_Endereco_EnderecoId",
                         column: x => x.EnderecoId,
                         principalTable: "Endereco",
                         principalColumn: "Id",
@@ -56,13 +56,13 @@ namespace Ong.Infra.Data.Migrations
                 });
             migrationBuilder.CreateIndex(
                 name: "Unique_Cpf",
-                table: "pessoas",
+                table: "usuarios",
                 column: "Cpf"
                 );
 
             migrationBuilder.CreateIndex(
                 name: "IX_pessoas_EnderecoId",
-                table: "pessoas",
+                table: "usuarios",
                 column: "EnderecoId");
         }
 
@@ -70,7 +70,7 @@ namespace Ong.Infra.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "pessoas");
+                name: "usuarios");
 
             migrationBuilder.DropTable(
                 name: "Endereco");

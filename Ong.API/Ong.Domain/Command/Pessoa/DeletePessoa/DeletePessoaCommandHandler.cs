@@ -11,10 +11,10 @@ namespace Ong.Domain.Command.Pessoa.DeletePessoa
     public class DeletePessoaCommandHandler : IRequestHandler<DeletePessoaCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
-        private readonly IPessoaReppository _pessoaReppository;
+        private readonly IUsuarioReppository _pessoaReppository;
         private readonly IMapper _mapper;
 
-        public DeletePessoaCommandHandler(IPessoaReppository pessoaReppository, IMapper mapper, ILoggerFactory loggerFactory)
+        public DeletePessoaCommandHandler(IUsuarioReppository pessoaReppository, IMapper mapper, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger<DeletePessoaCommandHandler>();
             _mapper = mapper;

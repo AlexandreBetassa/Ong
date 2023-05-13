@@ -12,7 +12,7 @@ namespace Ong.Infra.Data.Migrations
         {
             migrationBuilder.AddColumn<int>(
                 name: "ContatoId",
-                table: "pessoas",
+                table: "usuarios",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -33,13 +33,13 @@ namespace Ong.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_pessoas_ContatoId",
-                table: "pessoas",
+                name: "IX_usuarios_ContatoId",
+                table: "usuarios",
                 column: "ContatoId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_pessoas_Contato_ContatoId",
-                table: "pessoas",
+                table: "usuarios",
                 column: "ContatoId",
                 principalTable: "Contato",
                 principalColumn: "Id",
@@ -50,19 +50,19 @@ namespace Ong.Infra.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_pessoas_Contato_ContatoId",
-                table: "pessoas");
+                name: "FK_usuarios_Contato_ContatoId",
+                table: "usuarios");
 
             migrationBuilder.DropTable(
                 name: "Contato");
 
             migrationBuilder.DropIndex(
-                name: "IX_pessoas_ContatoId",
-                table: "pessoas");
+                name: "IX_usuarios_ContatoId",
+                table: "usuarios");
 
             migrationBuilder.DropColumn(
                 name: "ContatoId",
-                table: "pessoas");
+                table: "usuarios");
         }
     }
 }

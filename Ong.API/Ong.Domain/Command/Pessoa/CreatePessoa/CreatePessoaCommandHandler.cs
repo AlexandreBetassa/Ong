@@ -9,10 +9,10 @@ namespace Ong.Domain.Command.Pessoa.CreatePessoa
     public class CreatePessoaCommandHandler : IRequestHandler<CreatePessoaCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
-        private readonly IPessoaReppository _pessoaRepository;
+        private readonly IUsuarioReppository _pessoaRepository;
         private readonly IMapper _mapper;
 
-        public CreatePessoaCommandHandler(ILoggerFactory loggerFactory, IPessoaReppository pessoaReppository, IMapper mapper)
+        public CreatePessoaCommandHandler(ILoggerFactory loggerFactory, IUsuarioReppository pessoaReppository, IMapper mapper)
         {
             _logger = loggerFactory.CreateLogger<CreatePessoaCommandHandler>();
             _mapper = mapper;
