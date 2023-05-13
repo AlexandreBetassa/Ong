@@ -4,7 +4,6 @@ namespace Ong.Domain.Entities
 {
     public class Noticia : BaseEntity
     {
-        public int Id { get; set; }
         public string Titulo { get; set; }
         public string Imagem { get; set; }
         public string Data { get; set; }

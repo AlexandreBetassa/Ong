@@ -10,5 +10,6 @@ namespace Ong.Infra.Data.Context
 
         public DbSet<ParceiroOng> parceiros { get; set; }
         public DbSet<Noticia> noticias { get; set; }
+        public DbSet<Pessoa> pessoas { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ong.Infra.Data.Context;
 
@@ -10,9 +11,11 @@ using Ong.Infra.Data.Context;
 namespace Ong.Infra.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230513154221_Pessoa")]
+    partial class Pessoa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,29 +23,6 @@ namespace Ong.Infra.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Ong.Domain.Entities.Contato", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Ramal")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TipoContato")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contato");
-                });
 
             modelBuilder.Entity("Ong.Domain.Entities.Endereco", b =>
                 {
@@ -146,9 +126,6 @@ namespace Ong.Infra.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ContatoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Cpf")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -173,8 +150,6 @@ namespace Ong.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContatoId");
-
                     b.HasIndex("EnderecoId");
 
                     b.ToTable("pessoas");
@@ -182,19 +157,11 @@ namespace Ong.Infra.Data.Migrations
 
             modelBuilder.Entity("Ong.Domain.Entities.Pessoa", b =>
                 {
-                    b.HasOne("Ong.Domain.Entities.Contato", "Contato")
-                        .WithMany()
-                        .HasForeignKey("ContatoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Ong.Domain.Entities.Endereco", "Endereco")
                         .WithMany()
                         .HasForeignKey("EnderecoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Contato");
 
                     b.Navigation("Endereco");
                 });
