@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Ong.Domain.Command.Pessoa.CreatePessoa;
+using Ong.Domain.Command.Usuario.CreateUsuario;
 
 namespace Ong.API.Controllers.v1
 {
@@ -16,7 +16,7 @@ namespace Ong.API.Controllers.v1
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePessoa([FromBody] CreatePessoaCommand request)
+        public async Task<IActionResult> CreatePessoa([FromBody] CreateUsuarioCommand request)
         {
             return Ok(await _mediator.Send(request, CancellationToken.None));
         }

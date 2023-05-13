@@ -1,32 +1,30 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Ong.Domain.Command.Parceiros.DeleteParceiro;
 using Ong.Domain.Interfaces;
-using Ong.Infra.Data.Repositories;
 using System.Net;
 
-namespace Ong.Domain.Command.Pessoa.DeletePessoa
+namespace Ong.Domain.Command.Usuario.DeleteUsuario
 {
-    public class DeletePessoaCommandHandler : IRequestHandler<DeletePessoaCommand, HttpStatusCode>
+    public class DeleteUsuarioCommandHandler : IRequestHandler<DeleteUsuarioCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
         private readonly IUsuarioReppository _pessoaReppository;
         private readonly IMapper _mapper;
 
-        public DeletePessoaCommandHandler(IUsuarioReppository pessoaReppository, IMapper mapper, ILoggerFactory loggerFactory)
+        public DeleteUsuarioCommandHandler(IUsuarioReppository pessoaReppository, IMapper mapper, ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<DeletePessoaCommandHandler>();
+            _logger = loggerFactory.CreateLogger<DeleteUsuarioCommandHandler>();
             _mapper = mapper;
             _pessoaReppository = pessoaReppository;
         }
 
-        async Task<HttpStatusCode> IRequestHandler<DeletePessoaCommand, HttpStatusCode>.Handle(DeletePessoaCommand request, CancellationToken cancellationToken)
+        async Task<HttpStatusCode> IRequestHandler<DeleteUsuarioCommand, HttpStatusCode>.Handle(DeleteUsuarioCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation
-                    ($"Iniciado método {nameof(DeletePessoaCommandHandler)} || Delete parceiro: {request.IdPessoa}");
+                    ($"Iniciado método {nameof(DeleteUsuarioCommandHandler)} || Delete parceiro: {request.IdPessoa}");
 
                 var pessoa = await _pessoaReppository.GetByIdAsync(request.IdPessoa);
                 if (pessoa == null) throw new ArgumentException("Usuario não localizado");
