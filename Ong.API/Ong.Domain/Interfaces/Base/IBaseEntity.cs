@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Ong.Domain.Interfaces
+namespace Ong.Domain.Interfaces.Base
 {
     public interface IBaseEntity
     {

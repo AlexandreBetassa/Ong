@@ -8,6 +8,7 @@ namespace Ong.Infra.Data.Context
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<ParceirosOng> parceiros { get; set; }
+        public DbSet<ParceiroOng> parceiros { get; set; }
+        public DbSet<Noticia> noticias { get; set; }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using Ong.Domain.Entities;
+using Ong.Domain.Interfaces.Base;
 
 namespace Ong.Domain.Interfaces
 {
-    public interface IParceirosRepository : IBaseRepository<ParceirosOng>
+    public interface IParceirosRepository : IBaseRepository<ParceiroOng>
     {
-        Task<ParceirosOng> GetParceiroByName(string name);
+        Task<ParceiroOng> GetParceiroByName(string name);
     }
 }

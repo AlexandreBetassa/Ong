@@ -16,46 +16,46 @@ namespace Ong.Infra.Data.BaseData
             _context = context;
         }
 
-        public async Task<ParceirosOng> CreateAsync(ParceirosOng entity)
+        public async Task<ParceiroOng> CreateAsync(ParceiroOng entity)
         {
-            var result = await _context.Set<ParceirosOng>().AddAsync(entity);
+            var result = await _context.Set<ParceiroOng>().AddAsync(entity);
             _context.SaveChanges();
 
             return result.Entity;
         }
 
-        public async Task<ParceirosOng> DeleteAsync(ParceirosOng entity)
+        public async Task<ParceiroOng> DeleteAsync(ParceiroOng entity)
         {
-            var result = _context.Set<ParceirosOng>().Remove(entity);
+            var result = _context.Set<ParceiroOng>().Remove(entity);
             await _context.SaveChangesAsync();
 
             return result.Entity;
         }
 
-        public async Task<IEnumerable<ParceirosOng>> GetAllAsync()
+        public async Task<IEnumerable<ParceiroOng>> GetAllAsync()
         {
-            return await _context.Set<ParceirosOng>().ToListAsync();
+            return await _context.Set<ParceiroOng>().ToListAsync();
         }
 
-        public async Task<ParceirosOng> GetByIdAsync(int id)
+        public async Task<ParceiroOng> GetByIdAsync(int id)
         {
             return await _context
-                            .Set<ParceirosOng>()
+                            .Set<ParceiroOng>()
                             .AsNoTracking()
                             .FirstOrDefaultAsync(parceiro => parceiro.Id == id);
         }
 
-        public async Task<ParceirosOng> GetParceiroByName(string name)
+        public async Task<ParceiroOng> GetParceiroByName(string name)
         {
             return await _context
-                            .Set<ParceirosOng>()
+                            .Set<ParceiroOng>()
                             .AsNoTracking()
                             .FirstOrDefaultAsync(parceiro => parceiro.Nome == name);
         }
 
-        public async Task<ParceirosOng> UpdateAsync(ParceirosOng entity)
+        public async Task<ParceiroOng> UpdateAsync(ParceiroOng entity)
         {
-            var result = _context.Set<ParceirosOng>().Update(entity);
+            var result = _context.Set<ParceiroOng>().Update(entity);
             await _context.SaveChangesAsync();
 
             return result.Entity;

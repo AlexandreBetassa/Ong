@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Ong.Domain.Command.CreateParceiro;
+using Ong.Domain.Command.Parceiros.CreateParceiro;
 using Ong.Domain.Entities;
 
 namespace Ong.Domain.MapperProfile
@@ -8,7 +8,7 @@ namespace Ong.Domain.MapperProfile
     {
         public CreateParceiroProfile()
         {
-            CreateMap<CreateParceiroCommand, ParceirosOng>()
+            CreateMap<CreateParceiroCommand, ParceiroOng>()
                 .ForMember(dest => dest.UrlLogotipo, src => src.MapFrom(opt => opt.UrlLogotipo))
                 .ForMember(dest => dest.Nome, src => src.MapFrom(opt => opt.Nome));
         }

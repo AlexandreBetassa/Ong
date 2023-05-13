@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System.Net;
 
-namespace Ong.Domain.Command.UpdateParceiro
+namespace Ong.Domain.Command.Parceiros.UpdateParceiro
 {
     public class UpdateParceiroCommand : IRequest<HttpStatusCode>
     {

@@ -1,18 +1,18 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Ong.Domain.Command.CreateParceiro;
-using Ong.Domain.Command.DeleteParceiro;
-using Ong.Domain.Command.UpdateParceiro;
-using Ong.Domain.Queries;
+using Ong.Domain.Command.Parceiros.CreateParceiro;
+using Ong.Domain.Command.Parceiros.DeleteParceiro;
+using Ong.Domain.Command.Parceiros.UpdateParceiro;
+using Ong.Domain.Queries.GetAllParceiro;
 
 namespace Ong.API.Controllers.v1
 {
     [Route("api/parceiros")]
     [ApiController]
-    public class ParceirosController : ControllerBase
+    public class ParceiroController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public ParceirosController(IMediator mediator)
+        public ParceiroController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -37,7 +37,7 @@ namespace Ong.API.Controllers.v1
         {
             try
             {
-                return Ok(await _mediator.Send(new GetParceirosQueryCommand(), CancellationToken.None));
+                return Ok(await _mediator.Send(new GetParceirosQuery(), CancellationToken.None));
             }
             catch (Exception e)
             {

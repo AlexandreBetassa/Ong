@@ -5,7 +5,7 @@ using Ong.Domain.Entities;
 using Ong.Domain.Interfaces;
 using System.Net;
 
-namespace Ong.Domain.Command.CreateParceiro
+namespace Ong.Domain.Command.Parceiros.CreateParceiro
 {
     public class CreateParceiroCommandHandler : IRequestHandler<CreateParceiroCommand, HttpStatusCode>
     {
@@ -26,7 +26,7 @@ namespace Ong.Domain.Command.CreateParceiro
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");
 
-                var parceiroOng = _mapper.Map<ParceirosOng>(request);
+                var parceiroOng = _mapper.Map<ParceiroOng>(request);
                 await _parceirosRepository.CreateAsync(parceiroOng);
 
                 _logger.LogInformation($"Finalizado com sucesso {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");

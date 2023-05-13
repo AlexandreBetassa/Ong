@@ -5,7 +5,7 @@ using Ong.Domain.Entities;
 using Ong.Domain.Interfaces;
 using System.Net;
 
-namespace Ong.Domain.Command.UpdateParceiro
+namespace Ong.Domain.Command.Parceiros.UpdateParceiro
 {
     public class UpdateParceiroCommandHandler : IRequestHandler<UpdateParceiroCommand, HttpStatusCode>
     {
@@ -31,7 +31,7 @@ namespace Ong.Domain.Command.UpdateParceiro
                 var parceiro = await _parceirosRepository.GetByIdAsync(request.Id);
                 if (parceiro == null) throw new ArgumentException("Parceiro não localizado!!!");
 
-                var parceiroNew = _mapper.Map<ParceirosOng>(request);
+                var parceiroNew = _mapper.Map<ParceiroOng>(request);
 
                 await _parceirosRepository.UpdateAsync(parceiroNew);
 

@@ -1,17 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 using Ong.Domain.Interfaces;
 using Ong.Domain.MapperProfile;
-using Ong.Domain.Queries;
+using Ong.Domain.Queries.GetAllParceiro;
 using Ong.Infra.Data.BaseData;
 using Ong.Infra.Data.Context;
+using Ong.Infra.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<ILoggerFactory, LoggerFactory>();
 builder.Services.AddScoped<IParceirosRepository, ParceirosRepository>();
+builder.Services.AddScoped<INoticiasRepository, NoticiaRepository>();
 
 builder.Services.AddMediatR(opt =>
-                                opt.RegisterServicesFromAssembly(typeof(GetParceirosQueryCommandHandler).Assembly));
+                                opt.RegisterServicesFromAssembly(typeof(GetParceirosQueryHandler).Assembly));
 
 builder.Services.AddAutoMapper(opt =>
                                 opt.AddMaps(typeof(CreateParceiroProfile).Assembly));
