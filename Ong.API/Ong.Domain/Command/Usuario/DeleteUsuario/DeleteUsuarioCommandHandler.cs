@@ -42,6 +42,7 @@ namespace Ong.Domain.Command.Usuario.DeleteUsuario
                         ($"Sucesso método {nameof(DeleteUsuarioCommandHandler)} || Delete Usuario: {request.IdPessoa}");
 
                 throw;
+
             }
         }
     }
