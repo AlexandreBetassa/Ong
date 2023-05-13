@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Ong.Domain.Interfaces;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.MapperProfile;
+using Ong.Domain.MapperProfiles.Parceiro;
 using Ong.Domain.Queries.GetAllParceiro;
 using Ong.Infra.Data.Context;
 using Ong.Infra.Data.Data.BaseData;

@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using Ong.Domain.Command.Parceiros.UpdateParceiro;
 using Ong.Domain.Entities;
 
-namespace Ong.Domain.Command.Parceiros.UpdateParceiro
+namespace Ong.Domain.MapperProfiles.Parceiro
 {
-    public class UpdateParceiroCommandProfile : Profile
+    public class UpdateParceiroProfile : Profile
     {
-        public UpdateParceiroCommandProfile()
+        public UpdateParceiroProfile()
         {
             CreateMap<UpdateParceiroCommand, ParceiroOng>()
                 .ForMember(dest => dest.UrlLogotipo, src => src.MapFrom(opt => opt.UrlLogotipo))

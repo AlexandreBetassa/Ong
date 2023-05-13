@@ -2,10 +2,11 @@
 using Ong.Domain.Entities;
 using System.Net;
 
-namespace Ong.Domain.Command.Pessoa.CreatePessoa
+namespace Ong.Domain.Command.Usuario.UpdateUsuario
 {
-    public class CreatePessoaCommand : IRequest<HttpStatusCode>
+    public class UpdateUsuarioCommand : IRequest<HttpStatusCode>
     {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public string Cpf { get; set; }
         public string DataNascimento { get; set; }
