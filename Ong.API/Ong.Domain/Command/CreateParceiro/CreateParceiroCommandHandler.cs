@@ -3,10 +3,11 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Ong.Domain.Entities;
 using Ong.Domain.Interfaces;
+using System.Net;
 
 namespace Ong.Domain.Command.CreateParceiro
 {
-    public class CreateParceiroCommandHandler : IRequestHandler<CreateParceiroCommand, ParceirosOng>
+    public class CreateParceiroCommandHandler : IRequestHandler<CreateParceiroCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
         private readonly IParceirosRepository _parceirosRepository;
@@ -19,21 +20,24 @@ namespace Ong.Domain.Command.CreateParceiro
             _mapper = mapper;
         }
 
-        public async Task<ParceirosOng> Handle(CreateParceiroCommand request, CancellationToken cancellationToken)
+        public async Task<HttpStatusCode> Handle(CreateParceiroCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                _logger.LogInformation($"Iniciado serviço {nameof(CreateParceiro)} || Cadastro Parceiro {request.Nome}");
+                _logger.LogInformation($"Iniciado serviço {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");
 
                 var parceiroOng = _mapper.Map<ParceirosOng>(request);
+                await _parceirosRepository.CreateAsync(parceiroOng);
 
-                _logger.LogInformation($"Parceiro Cadastrado com sucesso {nameof(CreateParceiro)} || Cadastro Parceiro {request.Nome}");
-                return await _parceirosRepository.CreateAsync(parceiroOng);
+                _logger.LogInformation($"Finalizado com sucesso {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");
+
+                return HttpStatusCode.Created;
             }
             catch (Exception e)
             {
-                _logger.LogInformation($"Erro cadastro parceiro {nameof(CreateParceiro)} || Cadastro Parceiro {request.Nome}");
-                throw;
+                _logger.LogInformation($"Erro cadastro parceiro {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");
+
+                return HttpStatusCode.InternalServerError;
             }
             finally
             {
