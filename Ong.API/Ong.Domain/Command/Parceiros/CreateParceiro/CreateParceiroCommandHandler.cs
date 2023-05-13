@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Ong.Domain.Entities;
-using Ong.Domain.Interfaces;
+using Ong.Infra.Data.Repositories;
 using System.Net;
 
 namespace Ong.Domain.Command.Parceiros.CreateParceiro
@@ -10,10 +10,10 @@ namespace Ong.Domain.Command.Parceiros.CreateParceiro
     public class CreateParceiroCommandHandler : IRequestHandler<CreateParceiroCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
-        private readonly IParceirosRepository _parceirosRepository;
+        private readonly IParceiroRepository _parceirosRepository;
         private readonly IMapper _mapper;
 
-        public CreateParceiroCommandHandler(ILoggerFactory loggerFactory, IParceirosRepository parceirosRepository, IMapper mapper)
+        public CreateParceiroCommandHandler(ILoggerFactory loggerFactory, IParceiroRepository parceirosRepository, IMapper mapper)
         {
             _logger = loggerFactory.CreateLogger<CreateParceiroCommandHandler>();
             _parceirosRepository = parceirosRepository;

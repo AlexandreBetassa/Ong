@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Command.Noticias.CreateNoticia;
 using Ong.Domain.Command.Noticias.DeleteNoticia;
+using Ong.Domain.Command.Noticias.UpdateNoticia;
 using Ong.Domain.Queries.GetAllNoticia;
 
 namespace Ong.API.Controllers.v1
@@ -45,6 +46,19 @@ namespace Ong.API.Controllers.v1
 
         [HttpDelete]
         public async Task<IActionResult> DeleteNoticia([FromQuery] DeleteNoticiaCommand request)
+        {
+            try
+            {
+                return StatusCode(204, await _mediator.Send(request, CancellationToken.None));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateNoticia([FromBody] UpdateNoticiaCommand request)
         {
             try
             {

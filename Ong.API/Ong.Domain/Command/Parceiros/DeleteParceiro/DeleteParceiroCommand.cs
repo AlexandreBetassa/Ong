@@ -5,6 +5,6 @@ namespace Ong.Domain.Command.Parceiros.DeleteParceiro
 {
     public class DeleteParceiroCommand : IRequest<Unit>
     {
-        public string NomeParceiro { get; set; }
+        public int IdParceiro { get; set; }
     }
 }

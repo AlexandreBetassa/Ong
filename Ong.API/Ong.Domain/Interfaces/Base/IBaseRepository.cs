@@ -1,4 +1,6 @@
-﻿namespace Ong.Domain.Interfaces.Base
+﻿using Ong.Domain.Entities;
+
+namespace Ong.Domain.Interfaces.Base
 {
     public interface IBaseRepository<T> where T : class
     {

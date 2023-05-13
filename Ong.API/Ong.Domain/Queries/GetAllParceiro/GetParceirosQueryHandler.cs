@@ -1,15 +1,15 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using Ong.Domain.Interfaces;
+using Ong.Infra.Data.Repositories;
 
 namespace Ong.Domain.Queries.GetAllParceiro
 {
     public class GetParceirosQueryHandler : IRequestHandler<GetParceirosQuery, GetParceirosQueryResponse>
     {
         private readonly ILogger _logger;
-        private readonly IParceirosRepository _parceirosRepository;
+        private readonly IParceiroRepository _parceirosRepository;
 
-        public GetParceirosQueryHandler(ILoggerFactory logger, IParceirosRepository parceirosRepository)
+        public GetParceirosQueryHandler(ILoggerFactory logger, IParceiroRepository parceirosRepository)
         {
             _logger = logger.CreateLogger<GetParceirosQueryHandler>();
             _parceirosRepository = parceirosRepository;

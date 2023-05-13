@@ -1,15 +1,16 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using Ong.Domain.Interfaces;
+using Ong.Domain.Entities;
+using Ong.Infra.Data.Repositories;
 
 namespace Ong.Domain.Queries.GetAllNoticia
 {
     public class GetAllNoticiasQueryHandler : IRequestHandler<GetAllNoticiasQuery, GetAllNoticiasResponse>
     {
         private readonly ILogger _logger;
-        private readonly INoticiasRepository _noticiasRepository;
+        private readonly INoticiaRepository _noticiasRepository;
 
-        public GetAllNoticiasQueryHandler(ILoggerFactory loggerFactory, INoticiasRepository noticiasRepository)
+        public GetAllNoticiasQueryHandler(ILoggerFactory loggerFactory, INoticiaRepository noticiasRepository)
         {
             _logger = loggerFactory.CreateLogger<GetAllNoticiasQueryHandler>();
             _noticiasRepository = noticiasRepository;

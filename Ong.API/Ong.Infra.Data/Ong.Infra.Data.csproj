@@ -19,4 +19,10 @@
     <ProjectReference Include="..\Ong.Domain\Ong.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\OngDb.mdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

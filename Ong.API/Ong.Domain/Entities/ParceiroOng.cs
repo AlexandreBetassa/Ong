@@ -2,7 +2,7 @@
 
 namespace Ong.Domain.Entities
 {
-    public class ParceiroOng : IBaseEntity
+    public class ParceiroOng : BaseEntity
     {
         public int Id { get; set; }
         public string Nome { get; set; }

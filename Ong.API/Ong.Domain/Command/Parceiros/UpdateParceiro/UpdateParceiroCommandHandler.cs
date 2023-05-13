@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Ong.Domain.Entities;
-using Ong.Domain.Interfaces;
+using Ong.Domain.Interfaces.Base;
 using System.Net;
 
 namespace Ong.Domain.Command.Parceiros.UpdateParceiro
@@ -11,10 +11,10 @@ namespace Ong.Domain.Command.Parceiros.UpdateParceiro
     {
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
-        private readonly IParceirosRepository _parceirosRepository;
+        private readonly IBaseRepository<ParceiroOng> _parceirosRepository;
 
         public UpdateParceiroCommandHandler
-            (ILoggerFactory loggerFactory, IMapper mapper, IParceirosRepository parceirosRepository)
+            (ILoggerFactory loggerFactory, IMapper mapper, IBaseRepository<ParceiroOng> parceirosRepository)
         {
             _mapper = mapper;
             _logger = loggerFactory.CreateLogger<UpdateParceiroCommandHandler>();

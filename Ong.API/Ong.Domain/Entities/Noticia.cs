@@ -2,7 +2,7 @@
 
 namespace Ong.Domain.Entities
 {
-    public class Noticia : IBaseEntity
+    public class Noticia : BaseEntity
     {
         public int Id { get; set; }
         public string Titulo { get; set; }

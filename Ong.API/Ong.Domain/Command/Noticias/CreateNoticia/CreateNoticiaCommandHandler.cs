@@ -2,7 +2,8 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Ong.Domain.Entities;
-using Ong.Domain.Interfaces;
+using Ong.Domain.Interfaces.Base;
+using Ong.Infra.Data.Repositories;
 using System.Net;
 
 namespace Ong.Domain.Command.Noticias.CreateNoticia
@@ -10,10 +11,10 @@ namespace Ong.Domain.Command.Noticias.CreateNoticia
     public class CreateNoticiaCommandHandler : IRequestHandler<CreateNoticiaCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
-        private readonly INoticiasRepository _noticiasRepository;
+        private readonly INoticiaRepository _noticiasRepository;
         private readonly IMapper _mapper;
 
-        public CreateNoticiaCommandHandler(ILoggerFactory loggerFactory, INoticiasRepository noticiasRepository, IMapper mapper)
+        public CreateNoticiaCommandHandler(ILoggerFactory loggerFactory, INoticiaRepository noticiasRepository, IMapper mapper)
         {
             _logger = loggerFactory.CreateLogger<CreateNoticiaCommandHandler>();
             _mapper = mapper;
