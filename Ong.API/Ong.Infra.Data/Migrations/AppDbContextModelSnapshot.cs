@@ -21,6 +21,31 @@ namespace Ong.Infra.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Ong.Domain.Entities.Authentication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EmailUsuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NomeUsuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authentication");
+                });
+
             modelBuilder.Entity("Ong.Domain.Entities.Contato", b =>
                 {
                     b.Property<int>("Id")
@@ -171,11 +196,16 @@ namespace Ong.Infra.Data.Migrations
                     b.Property<bool>("PossuiAnimais")
                         .HasColumnType("bit");
 
+                    b.Property<int>("authenticationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ContatoId");
 
                     b.HasIndex("EnderecoId");
+
+                    b.HasIndex("authenticationId");
 
                     b.ToTable("pessoas");
                 });
@@ -194,9 +224,17 @@ namespace Ong.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Ong.Domain.Entities.Authentication", "authentication")
+                        .WithMany()
+                        .HasForeignKey("authenticationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Contato");
 
                     b.Navigation("Endereco");
+
+                    b.Navigation("authentication");
                 });
 #pragma warning restore 612, 618
         }

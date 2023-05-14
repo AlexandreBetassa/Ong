@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Ong.Domain.Interfaces.Base;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Ong.Domain.Interfaces.Base;
 
 namespace Ong.Domain.Entities
 {
@@ -13,5 +11,6 @@ namespace Ong.Domain.Entities
         public bool PossuiAnimais { get; set; }
         public Endereco Endereco { get; set; }
         public Contato Contato { get; set; }
+        public Authentication authentication { get; set; }
     }
 }

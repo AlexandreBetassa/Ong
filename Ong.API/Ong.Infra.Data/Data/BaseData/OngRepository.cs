@@ -48,6 +48,7 @@ namespace Ong.Infra.Data.Data.BaseData
             return await _context.Set<Usuario>()
                                  .Include(x => x.Endereco)
                                  .Include(x => x.Contato)
+                                 .Include(x => x.authentication)
                                  .ToListAsync();
         }
 

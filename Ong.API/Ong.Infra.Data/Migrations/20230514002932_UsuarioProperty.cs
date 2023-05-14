@@ -5,7 +5,7 @@
 namespace Ong.Infra.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Usuario : Migration
+    public partial class UsuarioProperty : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
