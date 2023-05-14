@@ -19,6 +19,7 @@ namespace Ong.Domain.Command.Noticias.UpdateNoticia
             _mapper = mapper;
             _noticiasRepository = noticiasRepository;
         }
+
         public async Task<HttpStatusCode> Handle(UpdateNoticiaCommand request, CancellationToken cancellationToken)
         {
             try
@@ -39,7 +40,7 @@ namespace Ong.Domain.Command.Noticias.UpdateNoticia
             catch (Exception e)
             {
                 _logger.LogError
-                    ($"Erro método {nameof(UpdateNoticiaCommandHandler)} || Update noticia: {request.Titulo} ||" +
+                    ($"Erro método {nameof(UpdateAnimalCommandHandler)} || Update noticia: {request.Titulo} ||" +
                     $"Erro: {e.Message}");
 
                 throw;

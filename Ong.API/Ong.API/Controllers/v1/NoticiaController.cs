@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Command.Noticias.CreateNoticia;
 using Ong.Domain.Command.Noticias.DeleteNoticia;
 using Ong.Domain.Command.Noticias.UpdateNoticia;
-using Ong.Domain.Queries.GetAllNoticia;
+using Ong.Domain.Queries.Noticia.GetAllNoticia;
 
 namespace Ong.API.Controllers.v1
 {
@@ -58,7 +58,7 @@ namespace Ong.API.Controllers.v1
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateNoticia([FromBody] UpdateNoticiaCommand request)
+        public async Task<IActionResult> UpdateNoticia([FromBody] UpdateAnimalCommand request)
         {
             try
             {

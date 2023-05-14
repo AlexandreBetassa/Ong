@@ -2,12 +2,12 @@
 
 namespace Ong.Domain.Queries.Parceiro.GetAllParceiro
 {
-    public class GetParceirosQueryResponse
+    public class GetAllParceirosQueryResponse
     {
 
         public IEnumerable<ParceiroOng> parceiros { get; set; }
 
-        public GetParceirosQueryResponse(IEnumerable<ParceiroOng> parceiros)
+        public GetAllParceirosQueryResponse(IEnumerable<ParceiroOng> parceiros)
         {
             this.parceiros = parceiros;
         }
