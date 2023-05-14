@@ -13,12 +13,12 @@ namespace Ong.API.Controllers.v1
     public class AnimalController : ControllerBase
     {
         private readonly IMediator _mediator;
-
         public AnimalController(IMediator mediator)
         {
             _mediator = mediator;
         }
-
+        int i = 1;
+        string x = int.ToString();
         [HttpPost]
         public async Task<IActionResult> CreateAnimal([FromBody] CreateAnimalCommand request)
         {
