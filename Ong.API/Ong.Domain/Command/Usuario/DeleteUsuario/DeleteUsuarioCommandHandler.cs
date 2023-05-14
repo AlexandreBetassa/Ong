@@ -9,10 +9,10 @@ namespace Ong.Domain.Command.Usuario.DeleteUsuario
     public class DeleteUsuarioCommandHandler : IRequestHandler<DeleteUsuarioCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
-        private readonly IUsuarioReppository _usuarioReppository;
+        private readonly IUsuarioRepository _usuarioReppository;
         private readonly IMapper _mapper;
 
-        public DeleteUsuarioCommandHandler(IUsuarioReppository usuarioReppository, IMapper mapper, ILoggerFactory loggerFactory)
+        public DeleteUsuarioCommandHandler(IUsuarioRepository usuarioReppository, IMapper mapper, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger<DeleteUsuarioCommandHandler>();
             _mapper = mapper;

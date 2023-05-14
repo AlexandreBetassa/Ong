@@ -1,5 +1,6 @@
 ﻿using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
+using Ong.Domain.Entities;
 using Ong.Domain.Interfaces.Base;
 using Ong.Infra.Data.Context;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ong.Infra.Data.Data.BaseData
 {
-    public class OngRepository<T> : IBaseRepository<T> where T : BaseEntity
+    public class OngRepository<T> : IBaseData<T> where T : BaseEntity
     {
         private readonly AppDbContext _context;
 
@@ -39,6 +40,14 @@ namespace Ong.Infra.Data.Data.BaseData
         {
             return await _context.Set<T>()
                                  .AsNoTracking()
+                                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Usuario>> GetAllUsuariosAsync()
+        {
+            return await _context.Set<Usuario>()
+                                 .Include(x => x.Endereco)
+                                 .Include(x => x.Contato)
                                  .ToListAsync();
         }
 

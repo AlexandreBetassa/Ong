@@ -11,10 +11,10 @@ namespace Ong.Domain.Command.Usuario.UpdateUsuario
     {
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
-        private readonly IUsuarioReppository _usuarioRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
 
         public UpdateUsuarioCommandHandler
-            (ILoggerFactory loggerFactory, IMapper mapper, IUsuarioReppository usuarioRepository)
+            (ILoggerFactory loggerFactory, IMapper mapper, IUsuarioRepository usuarioRepository)
         {
             _mapper = mapper;
             _logger = loggerFactory.CreateLogger<UpdateParceiroCommandHandler>();

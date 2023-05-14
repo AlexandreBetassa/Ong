@@ -9,10 +9,10 @@ namespace Ong.Domain.Command.Usuario.CreateUsuario
     public class CreateUsuarioCommandHandler : IRequestHandler<CreateUsuarioCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
-        private readonly IUsuarioReppository _pessoaRepository;
+        private readonly IUsuarioRepository _pessoaRepository;
         private readonly IMapper _mapper;
 
-        public CreateUsuarioCommandHandler(ILoggerFactory loggerFactory, IUsuarioReppository pessoaReppository, IMapper mapper)
+        public CreateUsuarioCommandHandler(ILoggerFactory loggerFactory, IUsuarioRepository pessoaReppository, IMapper mapper)
         {
             _logger = loggerFactory.CreateLogger<CreateUsuarioCommandHandler>();
             _mapper = mapper;

@@ -7,9 +7,9 @@ namespace Ong.Domain.Interfaces.Base
 {
     public class NoticiaRepository : INoticiaRepository
     {
-        private readonly IBaseRepository<Noticia> _db;
+        private readonly IBaseData<Noticia> _db;
 
-        public NoticiaRepository(IBaseRepository<Noticia> db)
+        public NoticiaRepository(IBaseData<Noticia> db)
         {
             _db = db;
         }

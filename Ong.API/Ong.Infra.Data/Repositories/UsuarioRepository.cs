@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ong.Infra.Data.Repositories
 {
-    public class UsuarioRepository : IUsuarioReppository
+    public class UsuarioRepository : IUsuarioRepository
     {
-        public IBaseRepository<Usuario> _db;
+        public IBaseData<Usuario> _db;
 
-        public UsuarioRepository(IBaseRepository<Usuario> db)
+        public UsuarioRepository(IBaseData<Usuario> db)
         {
             _db = db;
         }
@@ -28,6 +28,11 @@ namespace Ong.Infra.Data.Repositories
         public async Task<IEnumerable<Usuario>> GetAllAsync()
         {
             return await _db.GetAllAsync();
+        }
+
+        public async Task<IEnumerable<Usuario>> GetAllUsuariosAsync()
+        {
+            return await _db.GetAllUsuariosAsync();
         }
 
         public async Task<Usuario> GetByIdAsync(int id)

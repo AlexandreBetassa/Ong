@@ -7,8 +7,8 @@ namespace Ong.Infra.Data.Repositories
 {
     public class ParceiroRepository : IParceiroRepository
     {
-        private readonly IBaseRepository<ParceiroOng> _db;
-        public ParceiroRepository(IBaseRepository<ParceiroOng> db)
+        private readonly IBaseData<ParceiroOng> _db;
+        public ParceiroRepository(IBaseData<ParceiroOng> db)
         {
             _db = db;
         }

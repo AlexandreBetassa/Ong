@@ -10,11 +10,11 @@ using Ong.Infra.Data.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<ILoggerFactory, LoggerFactory>();
-builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(OngRepository<>));
 
+builder.Services.AddScoped(typeof(IBaseData<>), typeof(OngRepository<>));
 builder.Services.AddScoped<IParceiroRepository, ParceiroRepository>();
 builder.Services.AddScoped<INoticiaRepository, NoticiaRepository>();
-builder.Services.AddScoped<IUsuarioReppository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 builder.Services.AddMediatR(opt =>
                                 opt.RegisterServicesFromAssembly(typeof(GetParceirosQueryHandler).Assembly));

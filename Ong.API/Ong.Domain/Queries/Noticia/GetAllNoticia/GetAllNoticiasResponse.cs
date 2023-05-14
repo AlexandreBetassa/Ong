@@ -1,6 +1,4 @@
-﻿using Ong.Domain.Entities;
-
-namespace Ong.Domain.Queries.GetAllNoticia
+﻿namespace Ong.Domain.Queries.Noticia.GetAllNoticia
 {
     public class GetAllNoticiasResponse
     {
