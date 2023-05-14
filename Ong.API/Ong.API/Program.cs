@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Ong.Domain.Interfaces;
 using Ong.Domain.Interfaces.Base;
 using Ong.Domain.MapperProfiles.Parceiro;
-using Ong.Domain.Queries.GetAllParceiro;
+using Ong.Domain.Queries.Parceiro.GetAllParceiro;
 using Ong.Infra.Data.Context;
 using Ong.Infra.Data.Data.BaseData;
 using Ong.Infra.Data.Repositories;
@@ -15,9 +15,10 @@ builder.Services.AddScoped(typeof(IBaseData<>), typeof(OngRepository<>));
 builder.Services.AddScoped<IParceiroRepository, ParceiroRepository>();
 builder.Services.AddScoped<INoticiaRepository, NoticiaRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 
 builder.Services.AddMediatR(opt =>
-                                opt.RegisterServicesFromAssembly(typeof(GetParceirosQueryHandler).Assembly));
+                                opt.RegisterServicesFromAssembly(typeof(GetAllParceirosQueryHandler).Assembly));
 
 builder.Services.AddAutoMapper(opt =>
                                 opt.AddMaps(typeof(CreateParceiroProfile).Assembly));

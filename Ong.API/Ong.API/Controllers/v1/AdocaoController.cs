@@ -15,6 +15,11 @@ namespace Ong.API.Controllers.v1
             _mediator = madiator;   
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> CreateAdocao([FromBody] Cre)
+        //{
+
+        //}
 
     }
 }

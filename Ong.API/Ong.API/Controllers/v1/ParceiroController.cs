@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Command.Parceiros.CreateParceiro;
 using Ong.Domain.Command.Parceiros.DeleteParceiro;
 using Ong.Domain.Command.Parceiros.UpdateParceiro;
-using Ong.Domain.Queries.GetAllParceiro;
+using Ong.Domain.Queries.Parceiro.GetAllParceiro;
 
 namespace Ong.API.Controllers.v1
 {
@@ -37,7 +37,7 @@ namespace Ong.API.Controllers.v1
         {
             try
             {
-                return Ok(await _mediator.Send(new GetParceirosQuery(), CancellationToken.None));
+                return Ok(await _mediator.Send(new GetAllParceirosQuery(), CancellationToken.None));
             }
             catch (Exception e)
             {
