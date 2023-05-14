@@ -2,7 +2,7 @@
 
 namespace Ong.Domain.Enum
 {
-    public enum TipoContato
+    public enum TipoContatoEnum
     {
         [Description("celular")]
         Celular,
