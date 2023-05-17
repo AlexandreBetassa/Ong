@@ -34,7 +34,7 @@ namespace Ong.Domain.Command.Animal.CreateAnimal
             }
             catch (Exception e)
             {
-                _logger.LogError($"Erro serviço {nameof(CreateAnimalCommandHandler)} || Cadastro Animal {request.Nome}");
+                _logger.LogError($"Erro serviço {nameof(CreateAnimalCommandHandler)} || Cadastro Animal {request.Nome} || Erro: {e.Message}");
 
                 throw;
             }

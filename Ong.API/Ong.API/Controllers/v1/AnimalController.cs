@@ -8,7 +8,7 @@ using Ong.Domain.Queries.Animal.GetAnimal;
 
 namespace Ong.API.Controllers.v1
 {
-    [Route("api/animal")]
+    [Route("api/v1/animal")]
     [ApiController]
     public class AnimalController : ControllerBase
     {

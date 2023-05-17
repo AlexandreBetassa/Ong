@@ -108,6 +108,7 @@ namespace Ong.Infra.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_pessoas", x => x.Id);
+                    table.UniqueConstraint("Cpf", x => x.Cpf);
                     table.ForeignKey(
                         name: "FK_pessoas_Authentication_authenticationId",
                         column: x => x.authenticationId,
@@ -127,6 +128,12 @@ namespace Ong.Infra.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "Cpf_Unique",
+                table: "pessoas",
+                column: "Cpf"
+                );
 
             migrationBuilder.CreateIndex(
                 name: "IX_pessoas_authenticationId",

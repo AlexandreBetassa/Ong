@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<ILoggerFactory, LoggerFactory>();
 
 builder.Services.AddScoped(typeof(IBaseData<>), typeof(OngRepository<>));
+
 builder.Services.AddScoped<IParceiroRepository, ParceiroRepository>();
 builder.Services.AddScoped<INoticiaRepository, NoticiaRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
