@@ -7,7 +7,7 @@ using Ong.Domain.Queries.Noticia.GetAllNoticia;
 
 namespace Ong.API.Controllers.v1
 {
-    [Route("api/noticia")]
+    [Route("api/v1/noticia")]
     [ApiController]
     public class NoticiaController : ControllerBase
     {

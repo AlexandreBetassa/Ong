@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Command.Usuario.CreateUsuario;
 using Ong.Domain.Command.Usuario.DeleteUsuario;
 using Ong.Domain.Command.Usuario.UpdateUsuario;
-using Ong.Domain.Queries.Noticia.GetAllNoticia;
 using Ong.Domain.Queries.Usuario.GetAllUsuario;
 
 namespace Ong.API.Controllers.v1

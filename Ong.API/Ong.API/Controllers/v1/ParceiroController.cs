@@ -7,7 +7,7 @@ using Ong.Domain.Queries.Parceiro.GetAllParceiro;
 
 namespace Ong.API.Controllers.v1
 {
-    [Route("api/parceiros")]
+    [Route("api/v1/parceiros")]
     [ApiController]
     public class ParceiroController : ControllerBase
     {
