@@ -2,7 +2,7 @@
 
 namespace Ong.Domain.Enum
 {
-    public enum StatusEnum
+    public enum StatusAdocaoEnum
     {
         [Description("pendente")]
         Pendente,

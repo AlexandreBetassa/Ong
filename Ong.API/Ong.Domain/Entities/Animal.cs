@@ -1,4 +1,4 @@
-﻿using Ong.Domain.Interfaces.Base;
+﻿using Ong.Domain.Entities.Base;
 
 namespace Ong.Domain.Entities
 {
@@ -8,5 +8,6 @@ namespace Ong.Domain.Entities
         public string Informacoes { get; set; }
         public int Idade { get; set; }
         public string UrlImagem { get; set; }
+        public bool Ativo { get; set; }
     }
 }

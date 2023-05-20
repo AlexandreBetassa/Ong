@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Ong.Domain.Command.Adocao.CreateAdocao;
 
 namespace Ong.API.Controllers.v1
 {
@@ -15,11 +15,11 @@ namespace Ong.API.Controllers.v1
             _mediator = madiator;   
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateAdocao([FromBody] Cre)
-        //{
-
-        //}
+        [HttpPost]
+        public async Task<IActionResult> CreateAdocao([FromBody] CreateAdocaoCommand request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
 
     }
 }

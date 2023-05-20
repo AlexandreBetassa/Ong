@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Ong.Domain.Interfaces.Base
+namespace Ong.Domain.Entities.Base
 {
     public abstract class BaseEntity
     {

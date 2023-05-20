@@ -1,14 +1,17 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Command.Parceiros.CreateParceiro;
 using Ong.Domain.Command.Parceiros.DeleteParceiro;
 using Ong.Domain.Command.Parceiros.UpdateParceiro;
 using Ong.Domain.Queries.Parceiro.GetAllParceiro;
+using System.Data;
 
 namespace Ong.API.Controllers.v1
 {
-    [Route("api/parceiros")]
+    [Route("api/v1/parceiros")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class ParceiroController : ControllerBase
     {
         private readonly IMediator _mediator;

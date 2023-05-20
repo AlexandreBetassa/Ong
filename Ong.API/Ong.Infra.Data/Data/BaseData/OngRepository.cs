@@ -1,10 +1,9 @@
-﻿using AutoMapper.Internal;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Ong.Domain.Entities;
+using Ong.Domain.Entities.Base;
 using Ong.Domain.Interfaces.Base;
 using Ong.Infra.Data.Context;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ong.Infra.Data.Data.BaseData
@@ -20,8 +19,8 @@ namespace Ong.Infra.Data.Data.BaseData
 
         public async Task<T> CreateAsync(T entity)
         {
-            var noticia = await _context.Set<T>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+            var noticia = await _context.Set<T>()
+                                        .AddAsync(entity);
 
             return noticia.Entity;
         }
@@ -30,16 +29,31 @@ namespace Ong.Infra.Data.Data.BaseData
         {
             {
                 var noticia = _context.Set<T>().Remove(entity);
-                await _context.SaveChangesAsync();
 
                 return noticia.Entity;
             }
         }
 
+        public async Task<Usuario> FindByCpf(string cpf)
+        {
+            return await _context.Set<Usuario>()
+                                 .Include(usuario => usuario.Endereco)
+                                 .Include(usuario => usuario.Contato)
+                                 .FirstOrDefaultAsync(usuario => usuario.Cpf.Equals(cpf));
+
+        }
+
+        public async Task<Usuario> FindUsuarioLogin(string usuario)
+        {
+            return await _context.Set<Usuario>()
+                                 .Include(x => x.Authentication)
+                                 .FirstOrDefaultAsync(x => x.Authentication.EmailUsuario.Equals(usuario)
+                                                        || x.Authentication.NomeUsuario.Equals(usuario));
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _context.Set<T>()
-                                 .AsNoTracking()
                                  .ToListAsync();
         }
 
@@ -48,23 +62,25 @@ namespace Ong.Infra.Data.Data.BaseData
             return await _context.Set<Usuario>()
                                  .Include(x => x.Endereco)
                                  .Include(x => x.Contato)
-                                 .Include(x => x.authentication)
                                  .ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)
         {
             return await _context.Set<T>()
-                                 .AsNoTracking()
                                  .FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public async Task<T> UpdateAsync(T entity)
         {
             var noticia = _context.Set<T>().Update(entity);
-            await _context.SaveChangesAsync();
 
             return noticia.Entity;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{E9C3D696
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ong.Infra.Data", "Ong.Infra.Data\Ong.Infra.Data.csproj", "{C639A0DD-6AE3-4383-816E-F1A907410AC6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{281A14B2-0F6E-4B78-8B8D-A5EAD3A1251F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ong.API.CrossCutting", "Ong.API.CrossCutting\Ong.API.CrossCutting.csproj", "{7B045557-11DF-4340-925E-A202B5EF6F21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,10 @@ Global
 		{C639A0DD-6AE3-4383-816E-F1A907410AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C639A0DD-6AE3-4383-816E-F1A907410AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C639A0DD-6AE3-4383-816E-F1A907410AC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B045557-11DF-4340-925E-A202B5EF6F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B045557-11DF-4340-925E-A202B5EF6F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B045557-11DF-4340-925E-A202B5EF6F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B045557-11DF-4340-925E-A202B5EF6F21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +49,7 @@ Global
 		{4ADAEA2A-FBFD-407C-948B-0E1F1B86C31F} = {4D9B990D-268E-45C4-9063-0ACCE85DE1F8}
 		{078667C5-1C14-4122-9F95-752D02451019} = {53AE70BB-7109-43F8-8A0B-04A0307E064A}
 		{C639A0DD-6AE3-4383-816E-F1A907410AC6} = {E9C3D696-F77C-4B83-99F5-A02C718DE936}
+		{7B045557-11DF-4340-925E-A202B5EF6F21} = {281A14B2-0F6E-4B78-8B8D-A5EAD3A1251F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7EFE8517-5F5A-4FC5-B546-BA957F5627A1}

@@ -1,5 +1,6 @@
 ﻿using Ong.Domain.Entities;
 using Ong.Domain.Interfaces.Base;
+using Ong.Domain.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

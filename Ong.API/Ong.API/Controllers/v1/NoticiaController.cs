@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Command.Noticias.CreateNoticia;
 using Ong.Domain.Command.Noticias.DeleteNoticia;
@@ -7,8 +8,9 @@ using Ong.Domain.Queries.Noticia.GetAllNoticia;
 
 namespace Ong.API.Controllers.v1
 {
-    [Route("api/noticia")]
+    [Route("api/v1/noticia")]
     [ApiController]
+    [Authorize(Roles = "Admin, Usuario")]
     public class NoticiaController : ControllerBase
     {
         private readonly IMediator _mediator;

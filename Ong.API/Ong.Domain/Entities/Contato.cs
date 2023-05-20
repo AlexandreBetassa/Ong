@@ -1,5 +1,5 @@
-﻿using Ong.Domain.Enum;
-using Ong.Domain.Interfaces.Base;
+﻿using Ong.Domain.Entities.Base;
+using Ong.Domain.Enum;
 
 namespace Ong.Domain.Entities
 {

@@ -1,18 +1,19 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using Ong.Domain.Interfaces;
+using Ong.Domain.Interfaces.Base;
+using Ong.Domain.Interfaces.Repositories;
 
 namespace Ong.Domain.Queries.Animal.GetAnimal
 {
     public class GetAnimalQueryHandler : IRequestHandler<GetAnimalQuery, GetAnimalResponse>
     {
         private readonly ILogger _logger;
-        private readonly IAnimalRepository _animalRepository;
+        private readonly IUnityOfWork _unityOfWork;
 
-        public GetAnimalQueryHandler(ILoggerFactory loggerFactory, IAnimalRepository animalRepository)
+        public GetAnimalQueryHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork)
         {
             _logger = loggerFactory.CreateLogger<GetAnimalQueryHandler>();
-            _animalRepository = animalRepository;
+            _unityOfWork = unityOfWork;
         }
 
         public async Task<GetAnimalResponse> Handle(GetAnimalQuery request, CancellationToken cancellationToken)
@@ -21,7 +22,7 @@ namespace Ong.Domain.Queries.Animal.GetAnimal
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(GetAnimalQueryHandler)} || ID Animal {request.Id}");
 
-                var animal = await _animalRepository.GetByIdAsync(request.Id);
+                var animal = await _unityOfWork.AnimalRepository.GetByIdAsync(request.Id);
 
                 _logger.LogInformation($"Sucesso serviço {nameof(GetAnimalQueryHandler)} || ID Animal {request.Id}");
 
@@ -29,7 +30,7 @@ namespace Ong.Domain.Queries.Animal.GetAnimal
             }
             catch (Exception e)
             {
-                _logger.LogError($"Erro serviço {nameof(GetAnimalQueryHandler)} || ID Animal {request.Id}");
+                _logger.LogError($"Erro serviço {nameof(GetAnimalQueryHandler)} || ID Animal {request.Id} || ERRO: {e.Message}");
 
                 throw;
             }

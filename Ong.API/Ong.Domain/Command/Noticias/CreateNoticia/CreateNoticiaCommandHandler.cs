@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Ong.Domain.Entities;
 using Ong.Domain.Interfaces.Base;
-using Ong.Infra.Data.Repositories;
+using Ong.Domain.Interfaces.Repositories;
 using System.Net;
 
 namespace Ong.Domain.Command.Noticias.CreateNoticia
@@ -11,14 +11,14 @@ namespace Ong.Domain.Command.Noticias.CreateNoticia
     public class CreateNoticiaCommandHandler : IRequestHandler<CreateNoticiaCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
-        private readonly INoticiaRepository _noticiasRepository;
+        private readonly IUnityOfWork _unityOfWork;
         private readonly IMapper _mapper;
 
-        public CreateNoticiaCommandHandler(ILoggerFactory loggerFactory, INoticiaRepository noticiasRepository, IMapper mapper)
+        public CreateNoticiaCommandHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork, IMapper mapper)
         {
             _logger = loggerFactory.CreateLogger<CreateNoticiaCommandHandler>();
             _mapper = mapper;
-            _noticiasRepository = noticiasRepository;
+            _unityOfWork = unityOfWork;
         }
 
         public async Task<HttpStatusCode> Handle(CreateNoticiaCommand request, CancellationToken cancellationToken)
@@ -28,10 +28,12 @@ namespace Ong.Domain.Command.Noticias.CreateNoticia
                 _logger.LogInformation($"Iniciado serviço {nameof(CreateNoticiaCommandHandler)} || Cadastro Noticia {request.Titulo}");
 
                 var noticia = _mapper.Map<Noticia>(request);
-                await _noticiasRepository.CreateAsync(noticia);
+
+                await _unityOfWork.NoticiaRepository.CreateAsync(noticia);
+                await _unityOfWork.Save();
 
                 _logger.LogInformation($"Sucesso serviço {nameof(CreateNoticiaCommandHandler)} || Cadastro Noticia {request.Titulo}");
-
+                
                 return HttpStatusCode.Created;
             }
             catch (Exception e)

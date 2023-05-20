@@ -1,6 +1,6 @@
 ﻿using Ong.Domain.Entities;
-using Ong.Domain.Interfaces;
 using Ong.Domain.Interfaces.Base;
+using Ong.Domain.Interfaces.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,6 +23,16 @@ namespace Ong.Infra.Data.Repositories
         public async Task<Usuario> DeleteAsync(Usuario entity)
         {
             return await _db.DeleteAsync(entity);
+        }
+
+        public async Task<Usuario> FindUsuarioByCpf(string cpf)
+        {
+            return await _db.FindByCpf(cpf);
+        }
+
+        public async Task<Usuario> FindUsuarioLogin(string username)
+        {
+            return await _db.FindUsuarioLogin(username);
         }
 
         public async Task<IEnumerable<Usuario>> GetAllAsync()
