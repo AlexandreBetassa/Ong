@@ -126,7 +126,7 @@ namespace Ong.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.PrimaryKey("PK_pessoas", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Usuarios_Authentication_AuthenticationId",
                         column: x => x.AuthenticationId,
@@ -211,9 +211,9 @@ namespace Ong.Infra.Data.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_AuthenticationId",
-                table: "Usuarios",
-                column: "AuthenticationId");
+                name: "IX_pessoas_authenticationId",
+                table: "pessoas",
+                column: "authenticationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_ContatoId",
