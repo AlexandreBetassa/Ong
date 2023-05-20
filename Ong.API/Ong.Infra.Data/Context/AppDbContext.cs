@@ -11,6 +11,6 @@ namespace Ong.Infra.Data.Context
         public DbSet<Noticia> Noticias { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Animal> Animais { get; set; }
-        public DbSet<PedidoAdocao> PedidosAdocao { get; set; }
+        public DbSet<Adocao> PedidosAdocao { get; set; }
     }
 }

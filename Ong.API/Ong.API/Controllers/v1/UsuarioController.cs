@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Command.Usuario.CreateUsuario;
 using Ong.Domain.Command.Usuario.DeleteUsuario;
@@ -9,6 +10,7 @@ namespace Ong.API.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Usuario, Admin")]
     public class UsuarioController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -19,6 +21,7 @@ namespace Ong.API.Controllers.v1
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> CreatePessoa([FromBody] CreateUsuarioCommand request)
         {
             return Ok(await _mediator.Send(request, CancellationToken.None));

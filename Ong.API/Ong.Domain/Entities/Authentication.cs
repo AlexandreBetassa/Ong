@@ -1,4 +1,4 @@
-﻿using Ong.Domain.Interfaces.Base;
+﻿using Ong.Domain.Entities.Base;
 
 namespace Ong.Domain.Entities
 {

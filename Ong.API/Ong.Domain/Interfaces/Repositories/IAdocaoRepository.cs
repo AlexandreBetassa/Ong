@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ong.Domain.Interfaces
+namespace Ong.Domain.Interfaces.Repositories
 {
-    public interface IPedidoAdocaoRepository : IBaseRepository<PedidoAdocao>
+    public interface IAdocaoRepository : IBaseRepository<Adocao>
     {
     }
 }

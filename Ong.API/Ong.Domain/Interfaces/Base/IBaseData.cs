@@ -1,5 +1,4 @@
 ﻿using Ong.Domain.Entities;
-using Ong.Infra.Data.Repositories;
 
 namespace Ong.Domain.Interfaces.Base
 {
@@ -11,5 +10,8 @@ namespace Ong.Domain.Interfaces.Base
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<Usuario>> GetAllUsuariosAsync();
+        Task<Usuario> FindUsuarioLogin(string usuario);
+        Task<Usuario> FindByCpf(string cpf);
+        Task SaveChangesAsync();
     }
 }

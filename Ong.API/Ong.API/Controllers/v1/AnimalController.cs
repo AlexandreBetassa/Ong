@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿    using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Command.Animal.CreateAnimal;
 using Ong.Domain.Command.Animal.DeleteAnimal;
@@ -19,6 +20,7 @@ namespace Ong.API.Controllers.v1
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAnimal([FromBody] CreateAnimalCommand request)
         {
             try
@@ -32,6 +34,7 @@ namespace Ong.API.Controllers.v1
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAnimal([FromQuery] DeleteAnimalCommand request)
         {
             try
@@ -45,6 +48,7 @@ namespace Ong.API.Controllers.v1
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAnimal([FromBody] UpdateAnimalCommand request)
         {
             try

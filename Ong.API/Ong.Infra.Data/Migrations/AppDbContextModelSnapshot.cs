@@ -22,6 +22,38 @@ namespace Ong.Infra.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Ong.Domain.Entities.Adocao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AnimalId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataUltimaAtualizacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StatusAdocao")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnimalId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("PedidosAdocao");
+                });
+
             modelBuilder.Entity("Ong.Domain.Entities.Animal", b =>
                 {
                     b.Property<int>("Id")
@@ -29,6 +61,9 @@ namespace Ong.Infra.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Idade")
                         .HasColumnType("int");
@@ -73,6 +108,28 @@ namespace Ong.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authentication");
+                });
+
+            modelBuilder.Entity("Ong.Domain.Entities.Comentarios", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AdocaoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comentario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdocaoId");
+
+                    b.ToTable("Comentarios");
                 });
 
             modelBuilder.Entity("Ong.Domain.Entities.Contato", b =>
@@ -192,46 +249,6 @@ namespace Ong.Infra.Data.Migrations
                     b.ToTable("Parceiros");
                 });
 
-            modelBuilder.Entity("Ong.Domain.Entities.PedidoAdocao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AnimalId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DataAdocao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Justificativa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Obervacao")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UltimaAtualizacao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnimalId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("PedidosAdocao");
-                });
-
             modelBuilder.Entity("Ong.Domain.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -240,16 +257,18 @@ namespace Ong.Infra.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AuthenticationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ContatoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("DataNascimento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("EnderecoId")
                         .HasColumnType("int");
@@ -262,24 +281,27 @@ namespace Ong.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Perfil")
+                        .HasColumnType("int");
+
                     b.Property<bool>("PossuiAnimais")
                         .HasColumnType("bit");
 
-                    b.Property<int>("authenticationId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthenticationId");
 
                     b.HasIndex("ContatoId");
 
-                    b.HasIndex("EnderecoId");
+                    b.HasIndex("Cpf")
+                        .IsUnique();
 
-                    b.HasIndex("authenticationId");
+                    b.HasIndex("EnderecoId");
 
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("Ong.Domain.Entities.PedidoAdocao", b =>
+            modelBuilder.Entity("Ong.Domain.Entities.Adocao", b =>
                 {
                     b.HasOne("Ong.Domain.Entities.Animal", "Animal")
                         .WithMany()
@@ -298,8 +320,21 @@ namespace Ong.Infra.Data.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("Ong.Domain.Entities.Comentarios", b =>
+                {
+                    b.HasOne("Ong.Domain.Entities.Adocao", null)
+                        .WithMany("Comentarios")
+                        .HasForeignKey("AdocaoId");
+                });
+
             modelBuilder.Entity("Ong.Domain.Entities.Usuario", b =>
                 {
+                    b.HasOne("Ong.Domain.Entities.Authentication", "Authentication")
+                        .WithMany()
+                        .HasForeignKey("AuthenticationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Ong.Domain.Entities.Contato", "Contato")
                         .WithMany()
                         .HasForeignKey("ContatoId")
@@ -312,17 +347,16 @@ namespace Ong.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ong.Domain.Entities.Authentication", "authentication")
-                        .WithMany()
-                        .HasForeignKey("authenticationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Authentication");
 
                     b.Navigation("Contato");
 
                     b.Navigation("Endereco");
+                });
 
-                    b.Navigation("authentication");
+            modelBuilder.Entity("Ong.Domain.Entities.Adocao", b =>
+                {
+                    b.Navigation("Comentarios");
                 });
 #pragma warning restore 612, 618
         }

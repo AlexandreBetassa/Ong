@@ -1,18 +1,18 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using Ong.Domain.Interfaces;
+using Ong.Domain.Interfaces.Base;
 
 namespace Ong.Domain.Queries.Usuario.GetAllUsuario
 {
     public class GetAllUsuarioQueryHandler : IRequestHandler<GetAllUsuarioQuery, GetAllUsuarioResponse>
     {
         private readonly ILogger _logger;
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUnityOfWork _unityOfWork;
 
-        public GetAllUsuarioQueryHandler(ILoggerFactory logger, IUsuarioRepository usuarioRepository)
+        public GetAllUsuarioQueryHandler(ILoggerFactory logger, IUnityOfWork unityOfWork)
         {
             _logger = logger.CreateLogger<GetAllUsuarioQueryHandler>();
-            _usuarioRepository = usuarioRepository;
+            _unityOfWork = unityOfWork;
         }
 
         public async Task<GetAllUsuarioResponse> Handle(GetAllUsuarioQuery request, CancellationToken cancellationToken)
@@ -20,14 +20,16 @@ namespace Ong.Domain.Queries.Usuario.GetAllUsuario
             try
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(GetAllUsuarioQueryHandler)}");
-                var usuarios = await _usuarioRepository.GetAllUsuariosAsync();
+
+                var usuarios = await _unityOfWork.UsuarioRepository.GetAllUsuariosAsync();
+
                 _logger.LogInformation($"Sucesso serviço {nameof(GetAllUsuarioQueryHandler)}");
 
                 return new GetAllUsuarioResponse(usuarios);
             }
             catch (Exception e)
             {
-                _logger.LogInformation($"Erro serviço {nameof(GetAllUsuarioQueryHandler)} || Mensagem Erro: {e.Message}");
+                _logger.LogError($"Erro serviço {nameof(GetAllUsuarioQueryHandler)} || ERRO: {e.Message}");
 
                 throw;
             }

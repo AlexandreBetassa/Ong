@@ -2,7 +2,8 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Ong.Domain.Entities;
-using Ong.Infra.Data.Repositories;
+using Ong.Domain.Interfaces.Base;
+using Ong.Domain.Interfaces.Repositories;
 using System.Net;
 
 namespace Ong.Domain.Command.Parceiros.CreateParceiro
@@ -10,13 +11,13 @@ namespace Ong.Domain.Command.Parceiros.CreateParceiro
     public class CreateParceiroCommandHandler : IRequestHandler<CreateParceiroCommand, HttpStatusCode>
     {
         private readonly ILogger _logger;
-        private readonly IParceiroRepository _parceirosRepository;
+        private readonly IUnityOfWork _unityOfWork;
         private readonly IMapper _mapper;
 
-        public CreateParceiroCommandHandler(ILoggerFactory loggerFactory, IParceiroRepository parceirosRepository, IMapper mapper)
+        public CreateParceiroCommandHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork, IMapper mapper)
         {
             _logger = loggerFactory.CreateLogger<CreateParceiroCommandHandler>();
-            _parceirosRepository = parceirosRepository;
+            _unityOfWork = unityOfWork;
             _mapper = mapper;
         }
 
@@ -27,7 +28,9 @@ namespace Ong.Domain.Command.Parceiros.CreateParceiro
                 _logger.LogInformation($"Iniciado serviço {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");
 
                 var parceiroOng = _mapper.Map<ParceiroOng>(request);
-                await _parceirosRepository.CreateAsync(parceiroOng);
+
+                await _unityOfWork.ParceiroRepository.CreateAsync(parceiroOng);
+                await _unityOfWork.Save();
 
                 _logger.LogInformation($"Finalizado com sucesso {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");
 
@@ -37,11 +40,7 @@ namespace Ong.Domain.Command.Parceiros.CreateParceiro
             {
                 _logger.LogInformation($"Erro cadastro parceiro {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");
 
-                return HttpStatusCode.InternalServerError;
-            }
-            finally
-            {
-                _logger.LogInformation($"Finalizado serviço {nameof(CreateParceiro)} || Cadastro Parceiro {request.Nome}");
+                throw;
             }
         }
     }

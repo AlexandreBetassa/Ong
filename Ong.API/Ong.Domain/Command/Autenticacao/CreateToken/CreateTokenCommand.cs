@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ong.Domain.Command.Autenticacao.CreateToken
 {
-    public class CreateTokenCommand : IRequest<string>
+    public class CreateTokenCommand : IRequest<TokenResponse>
     {
         public string Usuario { get; set; }
         public string Senha { get; set; }
