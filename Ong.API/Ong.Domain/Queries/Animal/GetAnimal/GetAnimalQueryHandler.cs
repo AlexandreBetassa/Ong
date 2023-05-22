@@ -5,7 +5,7 @@ using Ong.Domain.Interfaces.Repositories;
 
 namespace Ong.Domain.Queries.Animal.GetAnimal
 {
-    public class GetAnimalQueryHandler : IRequestHandler<GetAnimalQuery, GetAnimalResponse>
+    public class GetAnimalQueryHandler : IRequestHandler<GetAnimalQuery, GetAnimalQueryResponse>
     {
         private readonly ILogger _logger;
         private readonly IUnityOfWork _unityOfWork;
@@ -16,7 +16,7 @@ namespace Ong.Domain.Queries.Animal.GetAnimal
             _unityOfWork = unityOfWork;
         }
 
-        public async Task<GetAnimalResponse> Handle(GetAnimalQuery request, CancellationToken cancellationToken)
+        public async Task<GetAnimalQueryResponse> Handle(GetAnimalQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace Ong.Domain.Queries.Animal.GetAnimal
 
                 _logger.LogInformation($"Sucesso serviço {nameof(GetAnimalQueryHandler)} || ID Animal {request.Id}");
 
-                return animal == null ? throw new ArgumentException("Animal não localizado") : new GetAnimalResponse(animal);
+                return animal == null ? throw new ArgumentException("Animal não localizado") : new GetAnimalQueryResponse(animal);
             }
             catch (Exception e)
             {

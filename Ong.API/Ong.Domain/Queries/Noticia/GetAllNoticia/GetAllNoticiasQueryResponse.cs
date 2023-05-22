@@ -1,8 +1,8 @@
 ﻿namespace Ong.Domain.Queries.Noticia.GetAllNoticia
 {
-    public class GetAllNoticiasResponse
+    public class GetAllNoticiasQueryResponse
     {
-        public GetAllNoticiasResponse(IEnumerable<Entities.Noticia> noticias)
+        public GetAllNoticiasQueryResponse(IEnumerable<Entities.Noticia> noticias)
         {
             Noticias = noticias;
         }

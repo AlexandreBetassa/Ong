@@ -1,10 +1,10 @@
 ﻿namespace Ong.Domain.Queries.Animal.GetAllAnimal
 {
-    public class GetAllAnimalResponse
+    public class GetAllAnimalQueryResponse
     {
         public IEnumerable<Entities.Animal> animais { get; set; }
 
-        public GetAllAnimalResponse(IEnumerable<Entities.Animal> animais)
+        public GetAllAnimalQueryResponse(IEnumerable<Entities.Animal> animais)
         {
             this.animais = animais;
         }

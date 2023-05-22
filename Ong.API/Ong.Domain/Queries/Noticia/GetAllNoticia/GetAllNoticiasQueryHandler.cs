@@ -6,7 +6,7 @@ using Ong.Domain.Interfaces.Repositories;
 
 namespace Ong.Domain.Queries.Noticia.GetAllNoticia
 {
-    public class GetAllNoticiasQueryHandler : IRequestHandler<GetAllNoticiasQuery, GetAllNoticiasResponse>
+    public class GetAllNoticiasQueryHandler : IRequestHandler<GetAllNoticiasQuery, GetAllNoticiasQueryResponse>
     {
         private readonly ILogger _logger;
         private readonly IUnityOfWork _unityOfWork;
@@ -17,7 +17,7 @@ namespace Ong.Domain.Queries.Noticia.GetAllNoticia
             _unityOfWork = unityOfWork;
         }
 
-        public async Task<GetAllNoticiasResponse> Handle(GetAllNoticiasQuery request, CancellationToken cancellationToken)
+        public async Task<GetAllNoticiasQueryResponse> Handle(GetAllNoticiasQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace Ong.Domain.Queries.Noticia.GetAllNoticia
 
                 _logger.LogInformation($"Sucesso serviço {nameof(GetAllNoticiasQueryHandler)}");
 
-                return new GetAllNoticiasResponse(noticias);
+                return new GetAllNoticiasQueryResponse(noticias);
             }
             catch (Exception e)
             {

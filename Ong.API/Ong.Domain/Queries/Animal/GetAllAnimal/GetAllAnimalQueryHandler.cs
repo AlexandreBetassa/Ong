@@ -5,7 +5,7 @@ using Ong.Domain.Interfaces.Repositories;
 
 namespace Ong.Domain.Queries.Animal.GetAllAnimal
 {
-    public class GetAllAnimalQueryHandler : IRequestHandler<GetAllAnimalQuery, GetAllAnimalResponse>
+    public class GetAllAnimalQueryHandler : IRequestHandler<GetAllAnimalQuery, GetAllAnimalQueryResponse>
     {
         private readonly ILogger _logger;
         private readonly IUnityOfWork _unityOfWork;
@@ -16,7 +16,7 @@ namespace Ong.Domain.Queries.Animal.GetAllAnimal
             _unityOfWork = unityOfWork;
         }
 
-        public async Task<GetAllAnimalResponse> Handle(GetAllAnimalQuery request, CancellationToken cancellationToken)
+        public async Task<GetAllAnimalQueryResponse> Handle(GetAllAnimalQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace Ong.Domain.Queries.Animal.GetAllAnimal
 
                 _logger.LogInformation($"Sucesso serviço {nameof(GetAllAnimalQueryHandler)}");
 
-                return new GetAllAnimalResponse(animais);
+                return new GetAllAnimalQueryResponse(animais);
             }
             catch (Exception e)
             {

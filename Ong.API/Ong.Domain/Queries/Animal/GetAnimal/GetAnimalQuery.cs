@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ong.Domain.Queries.Animal.GetAnimal
 {
-    public class GetAnimalQuery : IRequest<GetAnimalResponse>
+    public class GetAnimalQuery : IRequest<GetAnimalQueryResponse>
     {
         public int Id { get; set; }
     }

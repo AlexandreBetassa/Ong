@@ -4,7 +4,7 @@ using Ong.Domain.Interfaces.Base;
 
 namespace Ong.Domain.Queries.Usuario.GetAllUsuario
 {
-    public class GetAllUsuarioQueryHandler : IRequestHandler<GetAllUsuarioQuery, GetAllUsuarioResponse>
+    public class GetAllUsuarioQueryHandler : IRequestHandler<GetAllUsuarioQuery, GetAllUsuarioQueryResponse>
     {
         private readonly ILogger _logger;
         private readonly IUnityOfWork _unityOfWork;
@@ -15,7 +15,7 @@ namespace Ong.Domain.Queries.Usuario.GetAllUsuario
             _unityOfWork = unityOfWork;
         }
 
-        public async Task<GetAllUsuarioResponse> Handle(GetAllUsuarioQuery request, CancellationToken cancellationToken)
+        public async Task<GetAllUsuarioQueryResponse> Handle(GetAllUsuarioQuery request, CancellationToken cancellationToken)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace Ong.Domain.Queries.Usuario.GetAllUsuario
 
                 _logger.LogInformation($"Sucesso serviço {nameof(GetAllUsuarioQueryHandler)}");
 
-                return new GetAllUsuarioResponse(usuarios);
+                return new GetAllUsuarioQueryResponse(usuarios);
             }
             catch (Exception e)
             {
