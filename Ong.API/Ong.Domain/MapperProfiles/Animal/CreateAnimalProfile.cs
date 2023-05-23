@@ -8,6 +8,9 @@ namespace Ong.Domain.MapperProfiles.Animal
         public CreateAnimalProfile()
         {
             CreateMap<CreateAnimalCommand, Entities.Animal>();
+
+            CreateMap<Entities.Animal, CreateAnimalResponse>(MemberList.None)
+             .ForMember(dest => dest.Id, src => src.MapFrom(opt => opt.Id));
         }
     }
 }

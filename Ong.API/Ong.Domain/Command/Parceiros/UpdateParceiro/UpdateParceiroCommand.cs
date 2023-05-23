@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ong.Domain.Command.Parceiros.UpdateParceiro
 {
-    public class UpdateParceiroCommand : IRequest<HttpStatusCode>
+    public class UpdateParceiroCommand : IRequest<ObjectResult>
     {
         public int Id { get; set; }
         public string Nome { get; set; }

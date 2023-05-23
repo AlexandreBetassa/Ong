@@ -1,45 +1,42 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Ong.Domain.Command.Animal.CreateAnimal;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.Interfaces.Repositories;
-using System.Net;
 
 namespace Ong.Domain.Command.Noticias.UpdateNoticia
 {
-    public class UpdateAnimalCommandHandler : IRequestHandler<UpdateAnimalCommand, HttpStatusCode>
+    public class UpdateAnimalCommandHandler : BaseHandler<UpdateAnimalCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
-        private readonly IMapper _mapper;
 
-        public UpdateAnimalCommandHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork, IMapper mapper)
+        public UpdateAnimalCommandHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger)
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<UpdateAnimalCommandHandler>();
-            _mapper = mapper;
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<UpdateAnimalCommandHandler>();
         }
 
-        public async Task<HttpStatusCode> Handle(UpdateAnimalCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(UpdateAnimalCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation
                     ($"Iniciado método {nameof(UpdateAnimalCommandHandler)} || Update Animal: {request.Id}");
 
-                var animal = await _unityOfWork.AnimalRepository.GetByIdAsync(request.Id);
+                var animal = await UnityOfWork.AnimalRepository.GetByIdAsync(request.Id);
                 if (animal == null) throw new ArgumentException("Animal não localizado");
 
-                animal = _mapper.Map<Entities.Animal>(request);
+                animal = Mapper.Map<Entities.Animal>(request);
 
-                await _unityOfWork.AnimalRepository.UpdateAsync(animal);
-                await _unityOfWork.Save();
+                await UnityOfWork.AnimalRepository.UpdateAsync(animal);
+                await UnityOfWork.Save();
 
                 _logger.LogInformation
                     ($"Sucesso método {nameof(UpdateAnimalCommandHandler)} || Update Animal: {request.Id}");
 
-                return HttpStatusCode.NoContent;
+                return Create(204, Unit.Value);
             }
             catch (Exception e)
             {

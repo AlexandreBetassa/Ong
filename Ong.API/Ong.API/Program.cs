@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Ong.Domain.Command.Base;
 using Ong.Domain.DomainService.GenerateTokenJwt;
 using Ong.Domain.Interfaces;
 using Ong.Domain.Interfaces.Base;
@@ -26,8 +27,6 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IAnimalRepository, AnimalRepository>();
 builder.Services.AddScoped<IAdocaoRepository, AdocaoRepository>();
 builder.Services.AddScoped<IUnityOfWork, UnityOfWork>();
-
-
 
 builder.Services.AddScoped<IGenerateToken, GenerateToken>();
 

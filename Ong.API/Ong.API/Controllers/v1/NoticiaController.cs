@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Ong.API.Controllers.v1.Base;
 using Ong.Domain.Command.Noticias.CreateNoticia;
 using Ong.Domain.Command.Noticias.DeleteNoticia;
 using Ong.Domain.Command.Noticias.UpdateNoticia;
@@ -11,7 +12,7 @@ namespace Ong.API.Controllers.v1
     [Route("api/v1/noticia")]
     [ApiController]
     [Authorize(Roles = "Admin, Usuario")]
-    public class NoticiaController : ControllerBase
+    public class NoticiaController : BaseController
     {
         private readonly IMediator _mediator;
 
@@ -23,53 +24,26 @@ namespace Ong.API.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> CreateNoticia([FromBody] CreateNoticiaCommand request)
         {
-            try
-            {
-                return Ok(await _mediator.Send(request, CancellationToken.None));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await _mediator.Send(request);
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllNoticia()
         {
-            try
-            {
-                return Ok(await _mediator.Send(new GetAllNoticiasQuery(), CancellationToken.None));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(new GetAllNoticiasQuery()));
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteNoticia([FromQuery] DeleteNoticiaCommand request)
         {
-            try
-            {
-                return StatusCode(204, await _mediator.Send(request, CancellationToken.None));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(request, CancellationToken.None));
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateNoticia([FromBody] UpdateAnimalCommand request)
         {
-            try
-            {
-                return StatusCode(204, await _mediator.Send(request, CancellationToken.None));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(request, CancellationToken.None));
         }
     }
 }

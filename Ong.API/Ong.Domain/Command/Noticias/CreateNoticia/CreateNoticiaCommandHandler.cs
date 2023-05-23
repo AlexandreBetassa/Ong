@@ -1,40 +1,38 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Entities;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.Interfaces.Repositories;
-using System.Net;
 
 namespace Ong.Domain.Command.Noticias.CreateNoticia
 {
-    public class CreateNoticiaCommandHandler : IRequestHandler<CreateNoticiaCommand, HttpStatusCode>
+    public class CreateNoticiaCommandHandler : BaseHandler<CreateNoticiaCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
-        private readonly IMapper _mapper;
 
-        public CreateNoticiaCommandHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork, IMapper mapper)
+        public CreateNoticiaCommandHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<CreateNoticiaCommandHandler>();
-            _mapper = mapper;
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<CreateNoticiaCommandHandler>();
         }
 
-        public async Task<HttpStatusCode> Handle(CreateNoticiaCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(CreateNoticiaCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(CreateNoticiaCommandHandler)} || Cadastro Noticia {request.Titulo}");
 
-                var noticia = _mapper.Map<Noticia>(request);
+                var noticia = Mapper.Map<Noticia>(request);
 
-                await _unityOfWork.NoticiaRepository.CreateAsync(noticia);
-                await _unityOfWork.Save();
+                var result = await UnityOfWork.NoticiaRepository.CreateAsync(noticia);
+                await UnityOfWork.Save();
 
                 _logger.LogInformation($"Sucesso serviço {nameof(CreateNoticiaCommandHandler)} || Cadastro Noticia {request.Titulo}");
-                
-                return HttpStatusCode.Created;
+
+                return Create(201, Unit.Value);
             }
             catch (Exception e)
             {

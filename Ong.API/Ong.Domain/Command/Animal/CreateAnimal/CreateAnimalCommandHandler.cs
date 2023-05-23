@@ -1,44 +1,47 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.Interfaces.Repositories;
-using System.Net;
 
 namespace Ong.Domain.Command.Animal.CreateAnimal
 {
-    public class CreateAnimalCommandHandler : IRequestHandler<CreateAnimalCommand, HttpStatusCode>
+    public class CreateAnimalCommandHandler : BaseHandler<CreateAnimalCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
-        private readonly IMapper _mapper;
 
-        public CreateAnimalCommandHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork, IMapper mapper)
+        public CreateAnimalCommandHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<CreateAnimalCommandHandler>();
-            _mapper = mapper;
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<CreateAnimalCommandHandler>();
         }
 
-        public async Task<HttpStatusCode> Handle(CreateAnimalCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(CreateAnimalCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(CreateAnimalCommandHandler)} || Cadastro Animal {request.Nome}");
 
-                var animal = _mapper.Map<Entities.Animal>(request);
+                var animal = Mapper.Map<Entities.Animal>(request);
 
-                await _unityOfWork.AnimalRepository.CreateAsync(animal);
-                await _unityOfWork.Save();
+                animal = await UnityOfWork.AnimalRepository.CreateAsync(animal);
+                await UnityOfWork.Save();
+
+                var response = Mapper.Map<CreateAnimalResponse>(request);
+                animal = await UnityOfWork.AnimalRepository.GetByIdAsync(response.Id);
+
+                if (animal is null) throw new ArgumentException("Erro no cadastramento do animal");
 
                 _logger.LogInformation($"Sucesso serviço {nameof(CreateAnimalCommandHandler)} || Cadastro Animal {request.Nome}");
 
-                return HttpStatusCode.Created;
+                return Create(201);
             }
             catch (Exception e)
             {
                 _logger.LogError($"Erro serviço {nameof(CreateAnimalCommandHandler)} || Cadastro Animal {request.Nome} || Erro: {e.Message}");
-
+                
                 throw;
             }
         }

@@ -1,40 +1,37 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Ong.Domain.Command.Noticias.CreateNoticia;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Interfaces;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.Interfaces.Repositories;
 
 namespace Ong.Domain.Command.Autenticacao.CreateToken
 {
-    public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, TokenResponse>
+    public class CreateTokenCommandHandler : BaseHandler<CreateTokenCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IMapper _mapper;
         private readonly IGenerateToken _generateToken;
-        private readonly IUnityOfWork _unityOfWork;
 
         public CreateTokenCommandHandler
-            (ILoggerFactory loggerFactory, IMapper mapper, IUnityOfWork unityOfWork, IGenerateToken generateToken)
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger, IGenerateToken generateToken) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<CreateNoticiaCommandHandler>();
-            _mapper = mapper;
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<CreateTokenCommandHandler>(); 
             _generateToken = generateToken;
         }
 
-        public async Task<TokenResponse> Handle(CreateTokenCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(CreateTokenCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var usuario = await _unityOfWork.UsuarioRepository.FindUsuarioLogin(request.Usuario);
+                var usuario = await UnityOfWork.UsuarioRepository.FindUsuarioLogin(request.Usuario);
 
                 var token = _generateToken.GerarTokenJwt(usuario);
 
-                return token;
+                return Create(200, token);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }

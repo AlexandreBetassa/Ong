@@ -1,25 +1,25 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Entities;
 using Ong.Domain.Interfaces.Base;
 
 namespace Ong.Domain.Command.Parceiros.DeleteParceiro
 {
-    public class DeleteParceiroCommandHandler : IRequestHandler<DeleteParceiroCommand, Unit>
+    public class DeleteParceiroCommandHandler : BaseHandler<DeleteParceiroCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
-        private readonly IMapper _mapper;
 
-        public DeleteParceiroCommandHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork, IMapper mapper)
+        public DeleteParceiroCommandHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<DeleteParceiroCommandHandler>();
-            _mapper = mapper;
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<DeleteParceiroCommandHandler>();
         }
 
-        public async Task<Unit> Handle(DeleteParceiroCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(DeleteParceiroCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -29,12 +29,12 @@ namespace Ong.Domain.Command.Parceiros.DeleteParceiro
 
                 if (parceiroDelete == null) throw new ArgumentException($"Parceiro {request.IdParceiro} não localizado");
 
-                await _unityOfWork.ParceiroRepository.DeleteAsync(parceiroDelete);
-                await _unityOfWork.Save();
+                await UnityOfWork.ParceiroRepository.DeleteAsync(parceiroDelete);
+                await UnityOfWork.Save();
 
                 _logger.LogInformation($"Sucesso método {nameof(DeleteParceiroCommandHandler)} || Delete parceiro: {request.IdParceiro}");
 
-                return Unit.Value;
+                return Create(201,Unit.Value);
             }
             catch (Exception)
             {
@@ -46,7 +46,7 @@ namespace Ong.Domain.Command.Parceiros.DeleteParceiro
 
         private async Task<ParceiroOng> FindParceiroToDelete(DeleteParceiroCommand request)
         {
-            var parceiroDelete = await _unityOfWork.ParceiroRepository.GetByIdAsync(request.IdParceiro);
+            var parceiroDelete = await UnityOfWork.ParceiroRepository.GetByIdAsync(request.IdParceiro);
             return parceiroDelete is null ? throw new ArgumentException("Parceiro não localizado") : parceiroDelete;
         }
     }

@@ -1,41 +1,40 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Interfaces.Base;
-using System.Net;
 
 namespace Ong.Domain.Command.Usuario.DeleteUsuario
 {
-    public class DeleteUsuarioCommandHandler : IRequestHandler<DeleteUsuarioCommand, HttpStatusCode>
+    public class DeleteUsuarioCommandHandler : BaseHandler<DeleteUsuarioCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
-        private readonly IMapper _mapper;
 
-        public DeleteUsuarioCommandHandler(IUnityOfWork unityOfWork, IMapper mapper, ILoggerFactory loggerFactory)
+        public DeleteUsuarioCommandHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<DeleteUsuarioCommandHandler>();
-            _mapper = mapper;
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<DeleteUsuarioCommandHandler>();
         }
 
-        async Task<HttpStatusCode> IRequestHandler<DeleteUsuarioCommand, HttpStatusCode>.Handle(DeleteUsuarioCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(DeleteUsuarioCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation
                     ($"Iniciado método {nameof(DeleteUsuarioCommandHandler)} || Delete Usuario: {request.IdPessoa}");
 
-                var pessoa = await _unityOfWork.UsuarioRepository.GetByIdAsync(request.IdPessoa);
+                var pessoa = await UnityOfWork.UsuarioRepository.GetByIdAsync(request.IdPessoa);
                 if (pessoa == null) throw new ArgumentException("Usuario não localizado");
 
-                await _unityOfWork.UsuarioRepository.DeleteAsync(pessoa);
-                await _unityOfWork.Save();
+                await UnityOfWork.UsuarioRepository.DeleteAsync(pessoa);
+                await UnityOfWork.Save();
 
                 _logger.LogInformation
                         ($"Sucesso método {nameof(DeleteUsuarioCommandHandler)} || Delete Usuario: {request.IdPessoa}");
 
-                return HttpStatusCode.NoContent;
+                return Create(204, Unit.Value);
             }
             catch (Exception)
             {

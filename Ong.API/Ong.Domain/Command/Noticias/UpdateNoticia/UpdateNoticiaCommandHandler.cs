@@ -1,45 +1,43 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Entities;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.Interfaces.Repositories;
 using System.Net;
 
 namespace Ong.Domain.Command.Noticias.UpdateNoticia
 {
-    public class UpdateNoticiaCommandHandler : IRequestHandler<UpdateNoticiaCommand, HttpStatusCode>
+    public class UpdateNoticiaCommandHandler : BaseHandler<UpdateNoticiaCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
-        private readonly IMapper _mapper;
 
-        public UpdateNoticiaCommandHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork, IMapper mapper)
+        public UpdateNoticiaCommandHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<UpdateNoticiaCommandHandler>();
-            _mapper = mapper;
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<UpdateNoticiaCommandHandler>();
         }
 
-        public async Task<HttpStatusCode> Handle(UpdateNoticiaCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(UpdateNoticiaCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation
                     ($"Iniciado método {nameof(UpdateNoticiaCommandHandler)} || Update noticia: {request.Titulo}");
 
-                var noticia = await _unityOfWork.NoticiaRepository.GetByIdAsync(request.Id);
+                var noticia = await UnityOfWork.NoticiaRepository.GetByIdAsync(request.Id);
                 if (noticia == null) throw new ArgumentException("Noticia não localizada");
 
-                noticia = _mapper.Map<Noticia>(request);
+                noticia = Mapper.Map<Noticia>(request);
 
-                await _unityOfWork.NoticiaRepository.UpdateAsync(noticia);
-                await _unityOfWork.Save();
+                await UnityOfWork.NoticiaRepository.UpdateAsync(noticia);
+                await UnityOfWork.Save();
 
                 _logger.LogInformation
                     ($"Sucesso método {nameof(UpdateNoticiaCommandHandler)} || Update noticia: {request.Titulo}");
 
-                return HttpStatusCode.NoContent;
+                return Create(204, Unit.Value);
             }
             catch (Exception e)
             {

@@ -1,32 +1,35 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.Interfaces.Repositories;
 
 namespace Ong.Domain.Queries.Animal.GetAnimal
 {
-    public class GetAnimalQueryHandler : IRequestHandler<GetAnimalQuery, GetAnimalQueryResponse>
+    public class GetAnimalQueryHandler : BaseHandler<GetAnimalQuery, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
 
-        public GetAnimalQueryHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork)
+        public GetAnimalQueryHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<GetAnimalQueryHandler>();
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<GetAnimalQueryHandler>();
+
         }
 
-        public async Task<GetAnimalQueryResponse> Handle(GetAnimalQuery request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(GetAnimalQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(GetAnimalQueryHandler)} || ID Animal {request.Id}");
 
-                var animal = await _unityOfWork.AnimalRepository.GetByIdAsync(request.Id);
+                var animal = await UnityOfWork.AnimalRepository.GetByIdAsync(request.Id);
 
                 _logger.LogInformation($"Sucesso serviço {nameof(GetAnimalQueryHandler)} || ID Animal {request.Id}");
 
-                return animal == null ? throw new ArgumentException("Animal não localizado") : new GetAnimalQueryResponse(animal);
+                return Create(200, new GetAnimalQueryResponse(animal));
             }
             catch (Exception e)
             {

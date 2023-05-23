@@ -1,18 +1,18 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Ong.API.Controllers.v1.Base;
 using Ong.Domain.Command.Parceiros.CreateParceiro;
 using Ong.Domain.Command.Parceiros.DeleteParceiro;
 using Ong.Domain.Command.Parceiros.UpdateParceiro;
 using Ong.Domain.Queries.Parceiro.GetAllParceiro;
-using System.Data;
 
 namespace Ong.API.Controllers.v1
 {
     [Route("api/v1/parceiros")]
     [ApiController]
     [Authorize(Roles = "Admin")]
-    public class ParceiroController : ControllerBase
+    public class ParceiroController : BaseController
     {
         private readonly IMediator _mediator;
         public ParceiroController(IMediator mediator)
@@ -23,55 +23,26 @@ namespace Ong.API.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> CreateParceiro(CreateParceiroCommand request)
         {
-            try
-            {
-                var result = await _mediator.Send(request, CancellationToken.None);
-
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(request));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetParceiro()
         {
-            try
-            {
-                return Ok(await _mediator.Send(new GetAllParceirosQuery(), CancellationToken.None));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(new GetAllParceirosQuery()));
+
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteParceiro([FromQuery] DeleteParceiroCommand request)
         {
-            try
-            {
-                return Ok(await _mediator.Send(request, CancellationToken.None));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(request));
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateParceiro([FromBody] UpdateParceiroCommand request)
         {
-            try
-            {
-                return Ok(await _mediator.Send(request, CancellationToken.None));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(request));
         }
     }
 }

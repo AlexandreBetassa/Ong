@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ong.Domain.Queries.Animal.GetAllAnimal
 {
-    public class GetAllAnimalQuery : IRequest<GetAllAnimalQueryResponse>
+    public class GetAllAnimalQuery : IRequest<ObjectResult>
     {
     }
 }

@@ -1,31 +1,34 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Interfaces.Base;
 
 namespace Ong.Domain.Queries.Usuario.GetAllUsuario
 {
-    public class GetAllUsuarioQueryHandler : IRequestHandler<GetAllUsuarioQuery, GetAllUsuarioQueryResponse>
+    public class GetAllUsuarioQueryHandler : BaseHandler<GetAllUsuarioQuery, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
 
-        public GetAllUsuarioQueryHandler(ILoggerFactory logger, IUnityOfWork unityOfWork)
+        public GetAllUsuarioQueryHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
             _logger = logger.CreateLogger<GetAllUsuarioQueryHandler>();
-            _unityOfWork = unityOfWork;
         }
 
-        public async Task<GetAllUsuarioQueryResponse> Handle(GetAllUsuarioQuery request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(GetAllUsuarioQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(GetAllUsuarioQueryHandler)}");
 
-                var usuarios = await _unityOfWork.UsuarioRepository.GetAllUsuariosAsync();
+                var usuarios = await UnityOfWork.UsuarioRepository.GetAllUsuariosAsync();
 
                 _logger.LogInformation($"Sucesso serviço {nameof(GetAllUsuarioQueryHandler)}");
 
-                return new GetAllUsuarioQueryResponse(usuarios);
+                return Create(200, new GetAllUsuarioQueryResponse(usuarios));
             }
             catch (Exception e)
             {

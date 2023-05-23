@@ -1,13 +1,9 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ong.Domain.Queries.Usuario.GetAllUsuario
 {
-    public class GetAllUsuarioQuery : IRequest<GetAllUsuarioQueryResponse>
+    public class GetAllUsuarioQuery : IRequest<ObjectResult>
     {
     }
 }

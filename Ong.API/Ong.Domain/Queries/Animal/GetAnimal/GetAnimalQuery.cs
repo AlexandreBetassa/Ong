@@ -1,13 +1,9 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ong.Domain.Queries.Animal.GetAnimal
 {
-    public class GetAnimalQuery : IRequest<GetAnimalQueryResponse>
+    public class GetAnimalQuery : IRequest<ObjectResult>
     {
         public int Id { get; set; }
     }

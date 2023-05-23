@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ong.Infra.Data", "Ong.Infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{281A14B2-0F6E-4B78-8B8D-A5EAD3A1251F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ong.API.CrossCutting", "Ong.API.CrossCutting\Ong.API.CrossCutting.csproj", "{7B045557-11DF-4340-925E-A202B5EF6F21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ong.API.CrossCutting", "Ong.API.CrossCutting\Ong.API.CrossCutting.csproj", "{7B045557-11DF-4340-925E-A202B5EF6F21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

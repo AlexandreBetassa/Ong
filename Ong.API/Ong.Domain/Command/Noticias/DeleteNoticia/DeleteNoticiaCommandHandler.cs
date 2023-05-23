@@ -1,38 +1,38 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Interfaces.Base;
 
 namespace Ong.Domain.Command.Noticias.DeleteNoticia
 {
-    public class DeleteNoticiaCommandHandler : IRequestHandler<DeleteNoticiaCommand, Unit>
+    public class DeleteNoticiaCommandHandler : BaseHandler<DeleteNoticiaCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
-        private readonly IMapper _mapper;
 
-        public DeleteNoticiaCommandHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork, IMapper mapper)
+        public DeleteNoticiaCommandHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<DeleteNoticiaCommandHandler>();
-            _mapper = mapper;
-            _unityOfWork = unityOfWork; 
+            _logger = logger.CreateLogger<DeleteNoticiaCommandHandler>();
         }
 
-        public async Task<Unit> Handle(DeleteNoticiaCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(DeleteNoticiaCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation($"Iniciado método {nameof(DeleteNoticiaCommandHandler)} || Delete noticia: {request.Id}");
 
-                var noticia = await _unityOfWork.NoticiaRepository.GetByIdAsync(request.Id);
+                var noticia = await UnityOfWork.NoticiaRepository.GetByIdAsync(request.Id);
                 if (noticia == null) throw new ArgumentNullException($"Título {request.Id} não localizado");
 
-                await _unityOfWork.NoticiaRepository.DeleteAsync(noticia);
-                await _unityOfWork.Save();
+                await UnityOfWork.NoticiaRepository.DeleteAsync(noticia);
+                await UnityOfWork.Save();
 
                 _logger.LogInformation($"Sucesso método {nameof(DeleteNoticiaCommandHandler)} || Delete noticia: {request.Id}");
 
-                return Unit.Value;
+                return Create(201, Unit.Value);
             }
             catch (Exception)
             {

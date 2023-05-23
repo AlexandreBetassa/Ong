@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ong.Domain.Command.Animal.DeleteAnimal
 {
-    public class DeleteAnimalCommand : IRequest<HttpStatusCode>
+    public class DeleteAnimalCommand : IRequest<ObjectResult>
     {
         public int IdAnimal { get; set; }
     }

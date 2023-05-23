@@ -1,40 +1,38 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Entities;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.Interfaces.Repositories;
-using System.Net;
 
 namespace Ong.Domain.Command.Parceiros.CreateParceiro
 {
-    public class CreateParceiroCommandHandler : IRequestHandler<CreateParceiroCommand, HttpStatusCode>
+    public class CreateParceiroCommandHandler : BaseHandler<CreateParceiroCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
-        private readonly IMapper _mapper;
 
-        public CreateParceiroCommandHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork, IMapper mapper)
+        public CreateParceiroCommandHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<CreateParceiroCommandHandler>();
-            _unityOfWork = unityOfWork;
-            _mapper = mapper;
+            _logger = logger.CreateLogger<CreateParceiroCommandHandler>();
         }
 
-        public async Task<HttpStatusCode> Handle(CreateParceiroCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(CreateParceiroCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");
 
-                var parceiroOng = _mapper.Map<ParceiroOng>(request);
+                var parceiroOng = Mapper.Map<ParceiroOng>(request);
 
-                await _unityOfWork.ParceiroRepository.CreateAsync(parceiroOng);
-                await _unityOfWork.Save();
+                await UnityOfWork.ParceiroRepository.CreateAsync(parceiroOng);
+                await UnityOfWork.Save();
 
                 _logger.LogInformation($"Finalizado com sucesso {nameof(CreateParceiroCommandHandler)} || Cadastro Parceiro {request.Nome}");
 
-                return HttpStatusCode.Created;
+                return Create(201, Unit.Value);
             }
             catch (Exception e)
             {

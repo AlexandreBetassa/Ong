@@ -1,33 +1,34 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Ong.Domain.Entities;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.Interfaces.Repositories;
 
 namespace Ong.Domain.Queries.Noticia.GetAllNoticia
 {
-    public class GetAllNoticiasQueryHandler : IRequestHandler<GetAllNoticiasQuery, GetAllNoticiasQueryResponse>
+    public class GetAllNoticiasQueryHandler : BaseHandler<GetAllNoticiasQuery, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
 
-        public GetAllNoticiasQueryHandler(ILoggerFactory loggerFactory, IUnityOfWork unityOfWork)
+        public GetAllNoticiasQueryHandler
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger)
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<GetAllNoticiasQueryHandler>();
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<GetAllNoticiasQueryHandler>();
         }
 
-        public async Task<GetAllNoticiasQueryResponse> Handle(GetAllNoticiasQuery request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(GetAllNoticiasQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation($"Iniciado serviço {nameof(GetAllNoticiasQueryHandler)}");
 
-                var noticias = await _unityOfWork.NoticiaRepository.GetAllAsync();
+                var noticias = await UnityOfWork.NoticiaRepository.GetAllAsync();
 
                 _logger.LogInformation($"Sucesso serviço {nameof(GetAllNoticiasQueryHandler)}");
 
-                return new GetAllNoticiasQueryResponse(noticias);
+                return Create(200, noticias);
             }
             catch (Exception e)
             {

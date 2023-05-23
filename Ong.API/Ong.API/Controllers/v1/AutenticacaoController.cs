@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Ong.API.Controllers.v1.Base;
 using Ong.Domain.Command.Autenticacao.CreateToken;
 
 namespace Ong.API.Controllers.v1
@@ -8,7 +9,7 @@ namespace Ong.API.Controllers.v1
     [Route("api/v1/autenticacao")]
     [ApiController]
     [AllowAnonymous]
-    public class AutenticacaoController : ControllerBase
+    public class AutenticacaoController : BaseController
     {
         private readonly IMediator _mediator;
 
@@ -20,7 +21,7 @@ namespace Ong.API.Controllers.v1
         [HttpPost]
         public async Task<IActionResult> Authenticate([FromBody] CreateTokenCommand request)
         {
-            return Ok(await _mediator.Send(request));
+            return await GenerateResponseCode(async () => await _mediator.Send(request));
         }
     }
 }

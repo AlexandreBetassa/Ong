@@ -1,45 +1,42 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Command.Parceiros.UpdateParceiro;
 using Ong.Domain.Interfaces.Base;
-using System.Net;
 
 namespace Ong.Domain.Command.Usuario.UpdateUsuario
 {
-    public class UpdateUsuarioCommandHandler : IRequestHandler<UpdateUsuarioCommand, HttpStatusCode>
+    public class UpdateUsuarioCommandHandler : BaseHandler<UpdateUsuarioCommand, ObjectResult>
     {
         private readonly ILogger _logger;
-        private readonly IMapper _mapper;
-        private readonly IUnityOfWork _unityOfWork;
-
         public UpdateUsuarioCommandHandler
-            (ILoggerFactory loggerFactory, IMapper mapper, IUnityOfWork unityOfWork)
+            (IMediator mediator, IMapper mapper, IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _mapper = mapper;
-            _logger = loggerFactory.CreateLogger<UpdateParceiroCommandHandler>();
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<UpdateParceiroCommandHandler>();
         }
 
-        public async Task<HttpStatusCode> Handle(UpdateUsuarioCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(UpdateUsuarioCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 _logger.LogInformation
                     ($"Iniciado método {nameof(UpdateParceiroCommandHandler)} para atualização do parceiro {request.Nome}");
 
-                var usuario = await _unityOfWork.UsuarioRepository.GetByIdAsync(request.Id);
+                var usuario = await UnityOfWork.UsuarioRepository.GetByIdAsync(request.Id);
                 if (usuario == null) throw new ArgumentException("Usuario não localizado");
 
-                usuario = _mapper.Map<Entities.Usuario>(request);
+                usuario = Mapper.Map<Entities.Usuario>(request);
 
-                await _unityOfWork.UsuarioRepository.UpdateAsync(usuario);
-                await _unityOfWork.Save();
+                await UnityOfWork.UsuarioRepository.UpdateAsync(usuario);
+                await UnityOfWork.Save();
 
                 _logger.LogInformation
                     ($"Sucesso método {nameof(UpdateParceiroCommandHandler)} para atualização do parceiro {request.Nome}");
 
-                return HttpStatusCode.NoContent;
+                return Create(204, Unit.Value);
             }
             catch (Exception e)
             {

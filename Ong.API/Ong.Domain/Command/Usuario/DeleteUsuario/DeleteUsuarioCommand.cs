@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ong.Domain.Command.Usuario.DeleteUsuario
 {
-    public class DeleteUsuarioCommand : IRequest<HttpStatusCode>
+    public class DeleteUsuarioCommand : IRequest<ObjectResult>
     {
         public int IdPessoa { get; set; }
     }

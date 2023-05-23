@@ -1,6 +1,7 @@
-﻿    using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Ong.API.Controllers.v1.Base;
 using Ong.Domain.Command.Animal.CreateAnimal;
 using Ong.Domain.Command.Animal.DeleteAnimal;
 using Ong.Domain.Command.Noticias.UpdateNoticia;
@@ -11,9 +12,10 @@ namespace Ong.API.Controllers.v1
 {
     [Route("api/v1/animal")]
     [ApiController]
-    public class AnimalController : ControllerBase
+    public class AnimalController : BaseController
     {
         private readonly IMediator _mediator;
+
         public AnimalController(IMediator mediator)
         {
             _mediator = mediator;
@@ -23,68 +25,33 @@ namespace Ong.API.Controllers.v1
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAnimal([FromBody] CreateAnimalCommand request)
         {
-            try
-            {
-                return Ok(await _mediator.Send(request, CancellationToken.None));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(request));
         }
 
         [HttpDelete]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAnimal([FromQuery] DeleteAnimalCommand request)
         {
-            try
-            {
-                return Ok(await _mediator.Send(request, CancellationToken.None));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(request));
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateAnimal([FromBody] UpdateAnimalCommand request)
+        public async Task<IActionResult> UpdateAnimal([FromRoute] int id, [FromBody] UpdateAnimalCommand request)
         {
-            try
-            {
-                return Ok(await _mediator.Send(request, CancellationToken.None));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(request));
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}", Name = "GetById")]
         public async Task<IActionResult> GetAnimal([FromRoute] GetAnimalQuery request)
         {
-            try
-            {
-                return Ok(await _mediator.Send(request, CancellationToken.None));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(request));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAnimal()
         {
-            try
-            {
-                return Ok(await _mediator.Send(new GetAllAnimalQuery(), CancellationToken.None));
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await GenerateResponseCode(async () => await _mediator.Send(new GetAllAnimalQuery()));
         }
     }
 }

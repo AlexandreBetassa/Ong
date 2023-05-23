@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ong.Domain.Command.Noticias.CreateNoticia
 {
-    public class CreateNoticiaCommand : IRequest<HttpStatusCode>
+    public class CreateNoticiaCommand : IRequest<ObjectResult>
     {
         public string Titulo { get; set; }
         public string Imagem { get; set; }

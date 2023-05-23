@@ -1,11 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Entities;
 using Ong.Domain.Enum;
-using System.Net;
 
 namespace Ong.Domain.Command.Usuario.CreateUsuario
 {
-    public class CreateUsuarioCommand : IRequest<HttpStatusCode>
+    public class CreateUsuarioCommand : IRequest<ObjectResult>
     {
         public string Nome { get; set; }
         public string Cpf { get; set; }

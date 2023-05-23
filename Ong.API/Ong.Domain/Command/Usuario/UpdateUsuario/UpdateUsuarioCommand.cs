@@ -1,11 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Ong.Domain.Entities;
 using Ong.Domain.Enum;
 using System.Net;
 
 namespace Ong.Domain.Command.Usuario.UpdateUsuario
 {
-    public class UpdateUsuarioCommand : IRequest<HttpStatusCode>
+    public class UpdateUsuarioCommand : IRequest<ObjectResult>
     {
         public int Id { get; set; }
         public string Nome { get; set; }

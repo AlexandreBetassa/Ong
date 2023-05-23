@@ -1,32 +1,25 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Ong.Domain.Command.Animal.CreateAnimal;
-using Ong.Domain.Entities;
+using Ong.Domain.Command.Base;
 using Ong.Domain.Interfaces.Base;
-using Ong.Domain.Interfaces.Repositories;
-using System.Net;
 
 namespace Ong.Domain.Command.Adocao.CreateAdocao
 {
-    public class CreateAdocaoCommandHandler : IRequestHandler<CreateAdocaoCommand, HttpStatusCode>
+    public class CreateAdocaoCommandHandler : BaseHandler<CreateAdocaoCommand, ObjectResult>
     {
-
-        private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IUnityOfWork _unityOfWork;
-
         public CreateAdocaoCommandHandler
-            (ILoggerFactory loggerFactory,
+            (IMediator mediator,
             IMapper mapper,
-            IUnityOfWork unityOfWork)
+            IUnityOfWork unityOfWork, ILoggerFactory logger) 
+            : base(mediator, mapper, unityOfWork, logger)
         {
-            _logger = loggerFactory.CreateLogger<CreateAnimalCommandHandler>();
-            _mapper = mapper;
-            _unityOfWork = unityOfWork;
+            _logger = logger.CreateLogger<CreateAdocaoCommandHandler>();
         }
 
-        public async Task<HttpStatusCode> Handle(CreateAdocaoCommand request, CancellationToken cancellationToken)
+        public override async Task<ObjectResult> Handle(CreateAdocaoCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -48,16 +41,16 @@ namespace Ong.Domain.Command.Adocao.CreateAdocao
 
                 adocao.SetCriacao();
 
-                await _unityOfWork.AnimalRepository.UpdateAsync(animal);
-                await _unityOfWork.AdocaoRepository.CreateAsync(adocao);
-                await _unityOfWork.Save();
+                await UnityOfWork.AnimalRepository.UpdateAsync(animal);
+                await UnityOfWork.AdocaoRepository.CreateAsync(adocao);
+                await UnityOfWork.Save();
 
                 _logger.LogInformation
                     ($"Sucesso cadastramento de adoção {nameof(CreateAdocaoCommandHandler)} " +
                      $"|| CPF candidato {request.CpfCandidato} " +
                      $"|| Id Animal: {request.IdAnimal}");
 
-                return HttpStatusCode.Created;
+                return Create(201);
             }
             catch (Exception e)
             {
@@ -73,7 +66,7 @@ namespace Ong.Domain.Command.Adocao.CreateAdocao
 
         private async Task<Entities.Animal> GetAnimal(int idAnimal)
         {
-            var animal = await _unityOfWork.AnimalRepository.GetByIdAsync(idAnimal);
+            var animal = await UnityOfWork.AnimalRepository.GetByIdAsync(idAnimal);
 
             if (!animal.Ativo) throw new ArgumentException("Animal não esta disponivel para adoção");
 
@@ -82,7 +75,7 @@ namespace Ong.Domain.Command.Adocao.CreateAdocao
 
         private async Task<Entities.Usuario> GetUsuarioCandidato(string usuarioCpf)
         {
-            var usuario = await _unityOfWork.UsuarioRepository.FindUsuarioByCpf(usuarioCpf);
+            var usuario = await UnityOfWork.UsuarioRepository.FindUsuarioByCpf(usuarioCpf);
 
             return usuario is null ? throw new ArgumentException("CPF não localizado") : usuario;
         }
