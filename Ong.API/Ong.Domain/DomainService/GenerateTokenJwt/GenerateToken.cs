@@ -6,7 +6,7 @@ using Ong.API.CrossCutting.Authentication;
 using Ong.Domain.Command.Autenticacao.CreateToken;
 using Ong.Domain.Entities;
 using Ong.Domain.Enum;
-using Ong.Domain.Interfaces;
+using Ong.Domain.Interfaces.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

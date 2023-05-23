@@ -6,8 +6,8 @@ using Ong.Domain.Interfaces.Base;
 
 namespace Ong.Domain.Command.Base
 {
-    public abstract class BaseHandler<T, R> 
-        : IRequestHandler<T, R> where T 
+    public abstract class BaseHandler<T, R>
+        : IRequestHandler<T, R> where T
         : IRequest<R> where R : class
     {
         protected readonly IMediator Mediator;

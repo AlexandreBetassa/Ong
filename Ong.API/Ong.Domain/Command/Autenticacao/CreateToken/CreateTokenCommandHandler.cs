@@ -3,8 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Ong.Domain.Command.Base;
-using Ong.Domain.Interfaces;
 using Ong.Domain.Interfaces.Base;
+using Ong.Domain.Interfaces.Services;
 
 namespace Ong.Domain.Command.Autenticacao.CreateToken
 {
